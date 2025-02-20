@@ -9,15 +9,15 @@ interface PerformanceSectionProps {
 export function PerformanceSection({ data }: PerformanceSectionProps) {
   return (
     <Card className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-6">
         <h2 className="text-lg font-semibold">Weekly Performance Trend</h2>
         <a href="/analytics" className="text-sm text-primary hover:underline">
           View details
         </a>
       </div>
-      <div className="h-[300px]">
+      <div className="h-[300px] px-2">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data}>
+          <AreaChart data={data} margin={{ top: 10, right: 10, bottom: 10, left: 10 }}>
             <defs>
               <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.1}/>
