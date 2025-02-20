@@ -1,3 +1,4 @@
+
 import { Home, MessageSquare, BarChart2, Settings, User, Bell, LogOut, Lock, Moon, Sun } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 import { useLocation, Link, useNavigate } from "react-router-dom";
@@ -5,6 +6,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { Toggle } from "@/components/ui/toggle";
@@ -161,3 +163,75 @@ export function AppSidebar() {
                       <span>{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        
+        <div className="mt-auto">
+          <SidebarGroup>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <div className="flex items-center justify-between px-2 py-3">
+                    <span className="text-sm font-medium text-zinc-600 dark:text-zinc-400">Dark Mode</span>
+                    <Toggle 
+                      pressed={theme === "dark"} 
+                      onPressedChange={toggleTheme}
+                      variant="switch"
+                      className="relative"
+                    >
+                      <span className="absolute left-1 right-1 top-1 bottom-1">
+                        <span className={cn(
+                          "block h-4 w-4 rounded-full bg-white transition-transform",
+                          theme === "dark" ? "translate-x-[18px]" : "translate-x-0"
+                        )} />
+                      </span>
+                    </Toggle>
+                  </div>
+                </SidebarMenuItem>
+                {settingsMenuItems.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild>
+                      <Link 
+                        to={item.url} 
+                        className={`flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 dark:text-zinc-400 hover:text-primary hover:bg-zinc-100 dark:hover:bg-zinc-800 py-3 px-2 rounded-md ${item.url === currentPath ? "bg-[#F1F1F1] dark:bg-zinc-800 text-zinc-900 dark:text-white" : ""}`}
+                      >
+                        <item.icon className="w-5 h-5" />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+                <SidebarMenuItem>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button className="flex w-full items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 dark:text-zinc-400 hover:text-primary hover:bg-zinc-100 dark:hover:bg-zinc-800 py-3 px-2 rounded-md">
+                        <User className="w-5 h-5" />
+                        <span>Account</span>
+                      </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-48">
+                      <DropdownMenuItem asChild className="flex items-center gap-2">
+                        <Link to="/change-password" className="flex items-center gap-2">
+                          <Lock className="w-4 h-4" />
+                          <span>Change Password</span>
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={handleLogout} className="flex items-center gap-2 text-red-600">
+                        <LogOut className="w-4 h-4" />
+                        <span>Logout</span>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </div>
+      </SidebarContent>
+    </Sidebar>
+  );
+}
