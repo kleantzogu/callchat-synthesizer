@@ -12,16 +12,22 @@ type AgentDetailsDialogProps = {
 export function AgentDetailsDialog({ agent, isOpen, onOpenChange }: AgentDetailsDialogProps) {
   if (!agent) return null;
 
+  const getInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map(word => word[0])
+      .join('')
+      .toUpperCase();
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-4">
-            <img
-              src={agent.avatar}
-              alt={agent.name}
-              className="w-12 h-12 rounded-full"
-            />
+            <div className="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
+              {getInitials(agent.name)}
+            </div>
             <div>
               <h2 className="text-xl font-semibold">{agent.name}</h2>
               <p className="text-sm text-muted-foreground mt-1">Agent Profile</p>
