@@ -2,12 +2,42 @@
 import { Home, MessageSquare, BarChart2, Settings, User, Bell } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 import { useLocation, Link } from "react-router-dom";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 type MenuItem = {
   title: string;
   icon: React.ElementType;
   url: string;
 };
+
+const notifications = [
+  {
+    id: "1",
+    title: "New Transcript Available",
+    description: "A new customer conversation transcript has been processed.",
+    time: "2 hours ago",
+    unread: true
+  },
+  {
+    id: "2",
+    title: "Performance Update",
+    description: "Your weekly performance metrics are now available.",
+    time: "5 hours ago",
+    unread: true
+  },
+  {
+    id: "3",
+    title: "System Update",
+    description: "The system will undergo maintenance in 24 hours.",
+    time: "1 day ago",
+    unread: false
+  }
+];
 
 const mainMenuItems: MenuItem[] = [{
   title: "Dashboard",
@@ -64,10 +94,36 @@ export function AppSidebar() {
             <path d="M50.3523 17.5135V35.6312C50.3523 36.6879 51.209 37.5453 52.2664 37.5453C53.3239 37.5453 54.1799 36.6886 54.1799 35.6312V17.5135C54.1799 16.4567 53.3232 15.5993 52.2664 15.5993C51.2097 15.5993 50.3523 16.456 50.3523 17.5135Z" fill="#2100B1" />
             <path d="M60.4183 31.5479V20.5752C60.4183 19.5185 59.5616 18.6611 58.5041 18.6611C57.4467 18.6611 56.5907 19.5178 56.5907 20.5752V31.5479C56.5907 32.6046 57.4474 33.462 58.5041 33.462C59.5609 33.462 60.4183 32.6053 60.4183 31.5479Z" fill="#2100B1" />
           </svg>
-          <button className="relative p-2 hover:bg-gray-100 rounded-full transition-colors">
-            <Bell className="w-5 h-5 text-zinc-600" />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-          </button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="relative p-2 hover:bg-gray-100 rounded-full transition-colors">
+                <Bell className="w-5 h-5 text-zinc-600" />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-80">
+              {notifications.map((notification) => (
+                <DropdownMenuItem key={notification.id} className="flex flex-col items-start p-3 space-y-1">
+                  <div className="flex items-center justify-between w-full">
+                    <span className="font-medium">{notification.title}</span>
+                    <span className="text-xs text-muted-foreground">{notification.time}</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground">{notification.description}</p>
+                  {notification.unread && (
+                    <div className="flex items-center gap-1 text-xs text-primary">
+                      <div className="w-1 h-1 rounded-full bg-primary" />
+                      New
+                    </div>
+                  )}
+                </DropdownMenuItem>
+              ))}
+              <DropdownMenuItem asChild className="p-3 border-t">
+                <Link to="/notifications" className="w-full text-primary hover:text-primary">
+                  View all notifications
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
         <SidebarGroup>
           <SidebarGroupContent>
