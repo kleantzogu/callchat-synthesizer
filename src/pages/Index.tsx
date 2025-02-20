@@ -33,7 +33,7 @@ const Index = () => {
   return <SidebarProvider>
       <div className="min-h-screen flex w-full">
         <AppSidebar />
-        <main className="flex-1 p-8 bg-white">
+        <main className="flex-1 p-8 bg-zinc-200 hover:bg-zinc-100">
           <div className="max-w-7xl mx-auto">
             <header className="mb-8">
               <h1 className="text-3xl font-bold mb-2 animate-fade-down">Welcome to RitechGenAssist</h1>
@@ -41,7 +41,7 @@ const Index = () => {
             </header>
 
             <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              {kpis.map(kpi => <Card key={kpi.title} className="p-6 glass card-hover animate-fade-up bg-transparent rounded 1px">
+              {kpis.map(kpi => <Card key={kpi.title} className="p-6 glass card-hover animate-fade-up 1px bg-white rounded-xl">
                   <div className="flex items-center justify-between mb-4">
                     {kpi.icon && <kpi.icon className="w-6 h-6 text-primary" />}
                     <span className="text-xs font-medium text-green-500">{kpi.trend}</span>
@@ -52,7 +52,7 @@ const Index = () => {
             </section>
 
             <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card className="p-6 glass card-hover animate-fade-up">
+              <Card className="p-6 glass card-hover animate-fade-up bg-white">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-semibold">Recent Transcripts</h2>
                   <a href="/transcripts" className="text-sm text-primary hover:underline">
@@ -70,7 +70,7 @@ const Index = () => {
                 </div>
               </Card>
 
-              <Card className="p-6 glass card-hover animate-fade-up">
+              <Card className="p-6 glass card-hover animate-fade-up bg-white">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-semibold">Analytics Overview</h2>
                   <a href="/analytics" className="text-sm text-primary hover:underline">
