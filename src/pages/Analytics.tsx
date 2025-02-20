@@ -44,7 +44,7 @@ const Analytics = () => {
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
         <AppSidebar />
-        <main className="flex-1 p-8 bg-zinc-200 hover:bg-zinc-100">
+        <main className="flex-1 p-8 bg-zinc-100">
           <div className="max-w-7xl mx-auto">
             <header className="mb-8">
               <h1 className="text-3xl font-bold mb-2 animate-fade-down">Analytics</h1>
@@ -53,7 +53,7 @@ const Analytics = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               {insights.map((insight) => (
-                <Card key={insight.title} className="p-6 glass card-hover animate-fade-up bg-white">
+                <Card key={insight.title} className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
                   <div className="flex items-center justify-between mb-4">
                     <insight.icon className="w-6 h-6 text-primary" />
                     <span className={`text-xs font-medium ${
@@ -69,7 +69,7 @@ const Analytics = () => {
               ))}
             </div>
 
-            <Card className="p-6 glass card-hover animate-fade-up bg-white">
+            <Card className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
               <h2 className="text-lg font-semibold mb-4">Weekly Performance Trend</h2>
               <div className="h-[400px] w-full">
                 <ResponsiveContainer width="100%" height="100%">

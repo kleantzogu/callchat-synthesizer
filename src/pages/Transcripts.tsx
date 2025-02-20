@@ -36,14 +36,14 @@ const Transcripts = () => {
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
         <AppSidebar />
-        <main className="flex-1 p-8 bg-zinc-200 hover:bg-zinc-100">
+        <main className="flex-1 p-8 bg-zinc-100">
           <div className="max-w-7xl mx-auto">
             <header className="mb-8">
               <h1 className="text-3xl font-bold mb-2 animate-fade-down">Transcripts</h1>
               <p className="text-muted-foreground animate-fade-up">Review and analyze your conversation transcripts</p>
             </header>
 
-            <Card className="p-6 mb-6 glass card-hover animate-fade-up bg-white">
+            <Card className="p-6 mb-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
@@ -56,7 +56,7 @@ const Transcripts = () => {
 
             <div className="space-y-4">
               {transcripts.map((transcript) => (
-                <Card key={transcript.id} className="p-6 glass card-hover animate-fade-up bg-white">
+                <Card key={transcript.id} className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
                   <div className="flex items-start justify-between">
                     <div className="flex items-start space-x-4">
                       <MessageSquare className="w-6 h-6 text-primary mt-1" />
