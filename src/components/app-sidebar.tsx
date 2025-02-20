@@ -1,7 +1,7 @@
 
 import { Home, MessageSquare, BarChart2, Settings } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 
 type MenuItem = {
   title: string;
@@ -62,13 +62,13 @@ export function AppSidebar() {
             <SidebarMenu>
               {mainMenuItems.map(item => <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a 
-                      href={item.url} 
+                    <Link 
+                      to={item.url} 
                       className={`flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md ${item.url === currentPath ? "bg-zinc-100 text-zinc-900" : ""}`}
                     >
                       {item.icon && <item.icon className="w-5 h-5" />}
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>)}
             </SidebarMenu>
@@ -81,13 +81,13 @@ export function AppSidebar() {
               <SidebarMenu>
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild>
-                    <a 
-                      href={settingsMenuItem.url} 
+                    <Link 
+                      to={settingsMenuItem.url} 
                       className={`flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md ${settingsMenuItem.url === currentPath ? "bg-zinc-100 text-zinc-900" : ""}`}
                     >
                       <settingsMenuItem.icon className="w-5 h-5" />
                       <span>{settingsMenuItem.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               </SidebarMenu>
