@@ -5,13 +5,18 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
-const menuItems = [
+type MenuItem = {
+  title: string;
+  icon: React.ElementType; // Changed from LucideIcon type
+  url: string;
+};
+
+const menuItems: MenuItem[] = [
   { title: "Dashboard", icon: Home, url: "/" },
   { title: "Transcripts", icon: MessageSquare, url: "/transcripts" },
   { title: "Analytics", icon: BarChart2, url: "/analytics" },
@@ -33,7 +38,7 @@ export function AppSidebar() {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <a href={item.url} className="flex items-center gap-2">
-                      <item.icon className="w-5 h-5" />
+                      {item.icon && <item.icon className="w-5 h-5" />}
                       <span>{item.title}</span>
                     </a>
                   </SidebarMenuButton>

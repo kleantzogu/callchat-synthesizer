@@ -4,7 +4,14 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { BarChart2, Clock, Heart, ThumbsUp, UserCheck } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
-const kpis = [
+type KPI = {
+  title: string;
+  value: string;
+  icon: React.ElementType; // Changed from LucideIcon type
+  trend: string;
+};
+
+const kpis: KPI[] = [
   { title: "Response Time", value: "1.5s", icon: Clock, trend: "+5%" },
   { title: "Satisfaction", value: "95%", icon: Heart, trend: "+2%" },
   { title: "Service Quality", value: "92%", icon: ThumbsUp, trend: "+3%" },
@@ -27,7 +34,7 @@ const Index = () => {
               {kpis.map((kpi) => (
                 <Card key={kpi.title} className="p-6 glass card-hover animate-fade-up">
                   <div className="flex items-center justify-between mb-4">
-                    <kpi.icon className="w-6 h-6 text-primary" />
+                    {kpi.icon && <kpi.icon className="w-6 h-6 text-primary" />}
                     <span className="text-xs font-medium text-green-500">{kpi.trend}</span>
                   </div>
                   <h3 className="text-sm font-medium text-muted-foreground">{kpi.title}</h3>
