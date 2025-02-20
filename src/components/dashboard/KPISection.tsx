@@ -1,53 +1,56 @@
 
-import { BarChart2, Clock, Heart, ThumbsUp, UserCheck } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
+import { Users, ArrowUpRight, MessageSquare, Clock } from "lucide-react";
+import { MetricCard } from "../analytics/MetricCard";
+import { generateMetricData } from "@/utils/analyticsData";
 
-type KPI = {
-  title: string;
-  value: string;
-  icon: React.ElementType;
-  trend: string;
-};
+interface KPISectionProps {
+  timeFilter: string;
+}
 
-const kpis: KPI[] = [
-  {
-    title: "Response Time",
-    value: "1.5s",
-    icon: Clock,
-    trend: "+5%"
-  }, {
-    title: "Satisfaction",
-    value: "95%",
-    icon: Heart,
-    trend: "+2%"
-  }, {
-    title: "Service Quality",
-    value: "92%",
-    icon: ThumbsUp,
-    trend: "+3%"
-  }, {
-    title: "Resolution Rate",
-    value: "88%",
-    icon: UserCheck,
-    trend: "+1%"
-  }
-];
+export function KPISection({ timeFilter }: KPISectionProps) {
+  const metrics = [
+    {
+      title: "Active Users",
+      value: "2,420",
+      trend: "+5.23%",
+      icon: Users,
+      color: "#3b82f6",
+      data: generateMetricData(timeFilter, 2420, 200),
+      format: (value: number) => value.toLocaleString()
+    },
+    {
+      title: "Messages Sent",
+      value: "1,210",
+      trend: "+10.15%",
+      icon: MessageSquare,
+      color: "#16a34a",
+      data: generateMetricData(timeFilter, 1210, 100),
+      format: (value: number) => value.toLocaleString()
+    },
+    {
+      title: "Avg. Response Time",
+      value: "2.5m",
+      trend: "-12.40%",
+      icon: Clock,
+      color: "#dc2626",
+      data: generateMetricData(timeFilter, 2.5, 0.5),
+      format: (value: number) => `${value.toFixed(1)}m`
+    },
+    {
+      title: "Conversion Rate",
+      value: "12.5%",
+      trend: "+2.35%",
+      icon: ArrowUpRight,
+      color: "#9333ea",
+      data: generateMetricData(timeFilter, 12.5, 2),
+      format: (value: number) => `${value.toFixed(1)}%`
+    }
+  ];
 
-export function KPISection() {
   return (
-    <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-      {kpis.map(kpi => (
-        <Card key={kpi.title} className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
-          <div className="flex items-center justify-between mb-4">
-            {kpi.icon && <kpi.icon className="w-6 h-6 text-primary" />}
-            <Badge variant="secondary" className={`${kpi.trend.startsWith('+') ? 'bg-green-100 text-green-800 hover:bg-green-100' : 'bg-red-100 text-red-800 hover:bg-red-100'}`}>
-              {kpi.trend}
-            </Badge>
-          </div>
-          <h3 className="text-sm font-medium text-muted-foreground">{kpi.title}</h3>
-          <p className="text-2xl font-bold mt-1">{kpi.value}</p>
-        </Card>
+    <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+      {metrics.map((metric) => (
+        <MetricCard key={metric.title} {...metric} />
       ))}
     </section>
   );

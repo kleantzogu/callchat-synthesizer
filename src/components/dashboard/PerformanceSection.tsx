@@ -2,20 +2,11 @@
 import { Card } from "@/components/ui/card";
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
-const performanceData = [
-  { date: "Jan 24", value: 12000 },
-  { date: "Jan 25", value: 13500 },
-  { date: "Jan 26", value: 12800 },
-  { date: "Jan 27", value: 14200 },
-  { date: "Jan 28", value: 13900 },
-  { date: "Jan 29", value: 14500 },
-  { date: "Jan 30", value: 14032 },
-  { date: "Jan 31", value: 14800 },
-  { date: "Feb 1", value: 14200 },
-  { date: "Feb 2", value: 14600 },
-];
+interface PerformanceSectionProps {
+  data: Array<{ name: string; value: number }>;
+}
 
-export function PerformanceSection() {
+export function PerformanceSection({ data }: PerformanceSectionProps) {
   return (
     <Card className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
       <div className="flex items-center justify-between mb-4">
@@ -26,7 +17,7 @@ export function PerformanceSection() {
       </div>
       <div className="h-[300px]">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={performanceData}>
+          <AreaChart data={data}>
             <defs>
               <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.1}/>
@@ -34,7 +25,7 @@ export function PerformanceSection() {
               </linearGradient>
             </defs>
             <XAxis 
-              dataKey="date" 
+              dataKey="name" 
               axisLine={false}
               tickLine={false}
               tick={{ fill: '#666', fontSize: 12 }}

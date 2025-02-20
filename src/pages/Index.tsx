@@ -13,6 +13,7 @@ import { useState } from "react";
 import { KPISection } from "@/components/dashboard/KPISection";
 import { RecentTranscripts } from "@/components/dashboard/RecentTranscripts";
 import { PerformanceSection } from "@/components/dashboard/PerformanceSection";
+import { generateTimeData } from "@/utils/analyticsData";
 
 const timeFilters = [
   { label: "Today", value: "today" },
@@ -25,6 +26,8 @@ const timeFilters = [
 const Index = () => {
   const [timeFilter, setTimeFilter] = useState("30days");
   const isMobile = useIsMobile();
+
+  const performanceData = generateTimeData(timeFilter);
 
   return (
     <SidebarProvider>
@@ -52,11 +55,11 @@ const Index = () => {
                 <p className="text-muted-foreground animate-fade-up">Monitor and analyze your customer interactions in real-time</p>
               </header>
 
-              <KPISection />
+              <KPISection timeFilter={timeFilter} />
 
               <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <RecentTranscripts />
-                <PerformanceSection />
+                <PerformanceSection data={performanceData} />
               </section>
             </div>
           </div>
