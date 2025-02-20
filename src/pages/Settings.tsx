@@ -102,7 +102,14 @@ const Settings = () => {
 
     switch (field.type) {
       case "toggle":
-        return <Toggle aria-label={field.label} />;
+        return (
+          <Toggle
+            aria-label={field.label}
+            className="bg-zinc-200 hover:bg-zinc-300 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground w-[42px] h-[24px] rounded-full relative px-0.5 transition-colors"
+          >
+            <div className="w-[18px] h-[18px] bg-white rounded-full absolute top-[3px] left-[3px] transition-transform data-[state=on]:translate-x-[18px]" />
+          </Toggle>
+        );
       case "select":
         return (
           <select className="rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring">
