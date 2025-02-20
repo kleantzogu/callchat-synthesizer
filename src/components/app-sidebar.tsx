@@ -1,5 +1,5 @@
 
-import { Home, MessageSquare, BarChart2, Settings, User, Bell, Lock, LogOut } from "lucide-react";
+import { Home, MessageSquare, BarChart2, Settings, User, Bell, Lock, LogOut, Users } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import {
@@ -53,6 +53,10 @@ const mainMenuItems: MenuItem[] = [{
   title: "Analytics",
   icon: BarChart2,
   url: "/analytics"
+}, {
+  title: "Agents",
+  icon: Users,
+  url: "/agents"
 }];
 
 const settingsMenuItems = [

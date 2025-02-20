@@ -9,6 +9,7 @@ import Notifications from "./pages/Notifications";
 import ChangePassword from "./pages/ChangePassword";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Agents from "./pages/Agents";
 
 // Protected Route wrapper component
 const ProtectedRoute = () => {
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
       {
         path: "change-password",
         element: <ChangePassword />,
+      },
+      {
+        path: "agents",
+        element: <Agents />,
       },
     ],
   },
