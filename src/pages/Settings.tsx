@@ -1,3 +1,4 @@
+
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Card } from "@/components/ui/card";
@@ -12,7 +13,23 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-const settingSections = [
+type FieldType = "text" | "email" | "toggle" | "number" | "select";
+
+interface SettingField {
+  label: string;
+  type: FieldType;
+  placeholder?: string;
+  options?: string[];
+}
+
+interface SettingSection {
+  title: string;
+  icon: React.ElementType;
+  description: string;
+  fields: SettingField[];
+}
+
+const settingSections: SettingSection[] = [
   {
     title: "Profile Settings",
     icon: User,
@@ -79,6 +96,31 @@ const notifications = [
 
 const Settings = () => {
   const isMobile = useIsMobile();
+
+  const renderField = (field: SettingField) => {
+    if (!field || !field.type) return null;
+
+    switch (field.type) {
+      case "toggle":
+        return <Toggle aria-label={field.label} />;
+      case "select":
+        return (
+          <select className="rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring">
+            {field.options?.map((option) => (
+              <option key={option}>{option}</option>
+            ))}
+          </select>
+        );
+      default:
+        return (
+          <input
+            type={field.type}
+            placeholder={field.placeholder}
+            className="rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring"
+          />
+        );
+    }
+  };
 
   return (
     <SidebarProvider>
@@ -164,21 +206,7 @@ const Settings = () => {
                       {section.fields.map((field) => (
                         <div key={field.label} className="flex items-center justify-between">
                           <label className="text-sm font-medium">{field.label}</label>
-                          {field.type === "toggle" ? (
-                            <Toggle aria-label={field.label} />
-                          ) : field.type === "select" ? (
-                            <select className="rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring">
-                              {field.options?.map((option) => (
-                                <option key={option}>{option}</option>
-                              ))}
-                            </select>
-                          ) : (
-                            <input
-                              type={field.type}
-                              placeholder={field.placeholder}
-                              className="rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring"
-                            />
-                          )}
+                          {renderField(field)}
                         </div>
                       ))}
                     </div>
