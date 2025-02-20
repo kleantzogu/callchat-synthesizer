@@ -36,7 +36,7 @@ const Index = () => {
         <main className="flex-1 p-8 bg-zinc-200 hover:bg-zinc-100">
           <div className="max-w-7xl mx-auto">
             <header className="mb-8">
-              <h1 className="text-3xl font-bold mb-2 animate-fade-down">Welcome to RitechGenAssist</h1>
+              <h1 className="text-3xl font-bold mb-2 animate-fade-down">Welcome to Kleant</h1>
               <p className="text-muted-foreground animate-fade-up">Monitor and analyze your customer interactions in real-time</p>
             </header>
 

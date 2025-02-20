@@ -25,7 +25,7 @@ const menuItems: MenuItem[] = [{
 export function AppSidebar() {
   return <Sidebar>
       <SidebarContent className="bg-white">
-        <div className="flex flex-col items-center p-4 mb-4">
+        <div className="flex flex-row items-center p-4 mb-4">
           <UserRound className="w-10 h-10 mb-2" />
           <h1 className="text-lg font-semibold">RitechGenAssist</h1>
         </div>
