@@ -75,6 +75,7 @@ export function AppSidebar() {
   };
 
   const linkClasses = `flex w-full items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 h-10 px-3 rounded-md`;
+  const menuItemClasses = "h-10";
 
   return (
     <Sidebar>
@@ -136,7 +137,7 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {mainMenuItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
+                <SidebarMenuItem key={item.title} className={menuItemClasses}>
                   <SidebarMenuButton asChild>
                     <Link 
                       to={item.url} 
@@ -157,7 +158,7 @@ export function AppSidebar() {
             <SidebarGroupContent>
               <SidebarMenu>
                 {settingsMenuItems.map((item) => (
-                  <SidebarMenuItem key={item.title}>
+                  <SidebarMenuItem key={item.title} className={menuItemClasses}>
                     <SidebarMenuButton asChild>
                       <Link 
                         to={item.url} 
@@ -169,7 +170,7 @@ export function AppSidebar() {
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
-                <SidebarMenuItem>
+                <SidebarMenuItem className={menuItemClasses}>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <button className={linkClasses}>
