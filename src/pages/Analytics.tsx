@@ -1,8 +1,7 @@
+
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
-import { Clock, ThumbsUp, AlertTriangle, Bell, User, Timer, SmileIcon, Award, CheckCircle } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { Area, AreaChart, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { Timer, SmileIcon, Award, CheckCircle } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -11,150 +10,51 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useState } from "react";
-
-const generateTimeData = (timeFrame: string) => {
-  switch (timeFrame) {
-    case 'today':
-      return Array.from({ length: 24 }, (_, i) => ({
-        name: `${i}:00`,
-        value: 80 + Math.random() * 20
-      }));
-    case '7days':
-      return ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(day => ({
-        name: day,
-        value: 80 + Math.random() * 20
-      }));
-    case '30days':
-      return Array.from({ length: 30 }, (_, i) => ({
-        name: `Day ${i + 1}`,
-        value: 80 + Math.random() * 20
-      }));
-    case '6months':
-      return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'].map(month => ({
-        name: month,
-        value: 80 + Math.random() * 20
-      }));
-    case '12months':
-      return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map(month => ({
-        name: month,
-        value: 80 + Math.random() * 20
-      }));
-    default:
-      return [];
-  }
-};
-
-const generateMetricData = (timeFrame: string, baseValue: number, variance: number) => {
-  const length = timeFrame === 'today' ? 24 : 
-                timeFrame === '7days' ? 7 :
-                timeFrame === '30days' ? 30 :
-                timeFrame === '6months' ? 6 : 12;
-
-  return Array.from({ length }, (_, i) => ({
-    name: i.toString(),
-    value: baseValue + (Math.random() - 0.5) * variance
-  }));
-};
-
-const weeklyData = [
-  { name: 'Mon', value: 85 },
-  { name: 'Tue', value: 88 },
-  { name: 'Wed', value: 92 },
-  { name: 'Thu', value: 87 },
-  { name: 'Fri', value: 91 },
-  { name: 'Sat', value: 84 },
-  { name: 'Sun', value: 89 },
-];
-
-const metricCards = [
-  {
-    title: "Response Time",
-    value: "2.5 min",
-    trend: "-12%",
-    icon: Timer,
-    data: generateMetricData('7days', 2.5, 1),
-    color: "#3b82f6",
-    format: (value: number) => `${value.toFixed(1)} min`
-  },
-  {
-    title: "Satisfaction",
-    value: "92%",
-    trend: "+5%",
-    icon: SmileIcon,
-    data: generateMetricData('7days', 92, 10),
-    color: "#10b981",
-    format: (value: number) => `${value.toFixed(0)}%`
-  },
-  {
-    title: "Service Quality",
-    value: "4.8/5",
-    trend: "+0.3",
-    icon: Award,
-    data: generateMetricData('7days', 4.8, 0.5),
-    color: "#8b5cf6",
-    format: (value: number) => `${value.toFixed(1)}/5`
-  },
-  {
-    title: "Resolution Rate",
-    value: "95%",
-    trend: "+8%",
-    icon: CheckCircle,
-    data: generateMetricData('7days', 95, 8),
-    color: "#f59e0b",
-    format: (value: number) => `${value.toFixed(0)}%`
-  }
-];
-
-const insights = [
-  {
-    title: "Average Call Duration",
-    value: "8m 45s",
-    trend: "-12%",
-    icon: Clock,
-    description: "Decreased from last week"
-  },
-  {
-    title: "Customer Satisfaction",
-    value: "92%",
-    trend: "+5%",
-    icon: ThumbsUp,
-    description: "Improved from last week"
-  },
-  {
-    title: "Issues Identified",
-    value: "24",
-    trend: "-8%",
-    icon: AlertTriangle,
-    description: "Fewer issues than last week"
-  }
-];
-
-const notifications = [
-  {
-    id: 1,
-    title: "New transcript available",
-    description: "Call #123 has been transcribed",
-    time: "2 mins ago",
-    unread: true,
-  },
-  {
-    id: 2,
-    title: "Analysis complete",
-    description: "Sentiment analysis finished for call #456",
-    time: "1 hour ago",
-    unread: true,
-  },
-  {
-    id: 3,
-    title: "System update",
-    description: "New features available in the dashboard",
-    time: "2 hours ago",
-    unread: false,
-  }
-];
+import { MetricCard } from "@/components/analytics/MetricCard";
+import { PerformanceChart } from "@/components/analytics/PerformanceChart";
+import { generateTimeData, generateMetricData } from "@/utils/analyticsData";
 
 const Analytics = () => {
   const [timeFrame, setTimeFrame] = useState('7days');
+
+  const metricCards = [
+    {
+      title: "Response Time",
+      value: "2.5 min",
+      trend: "-12%",
+      icon: Timer,
+      data: generateMetricData(timeFrame, 2.5, 1),
+      color: "#3b82f6",
+      format: (value: number) => `${value.toFixed(1)} min`
+    },
+    {
+      title: "Satisfaction",
+      value: "92%",
+      trend: "+5%",
+      icon: SmileIcon,
+      data: generateMetricData(timeFrame, 92, 10),
+      color: "#10b981",
+      format: (value: number) => `${value.toFixed(0)}%`
+    },
+    {
+      title: "Service Quality",
+      value: "4.8/5",
+      trend: "+0.3",
+      icon: Award,
+      data: generateMetricData(timeFrame, 4.8, 0.5),
+      color: "#8b5cf6",
+      format: (value: number) => `${value.toFixed(1)}/5`
+    },
+    {
+      title: "Resolution Rate",
+      value: "95%",
+      trend: "+8%",
+      icon: CheckCircle,
+      data: generateMetricData(timeFrame, 95, 8),
+      color: "#f59e0b",
+      format: (value: number) => `${value.toFixed(0)}%`
+    }
+  ];
 
   return (
     <SidebarProvider>
@@ -187,100 +87,11 @@ const Analytics = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
                 {metricCards.map((metric) => (
-                  <Card key={metric.title} className="p-4 sm:p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
-                    <div className="flex items-center justify-between mb-3 sm:mb-4">
-                      <div className="flex items-center gap-2">
-                        <metric.icon className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: metric.color }} />
-                        <h3 className="text-sm sm:text-base font-medium">{metric.title}</h3>
-                      </div>
-                      <span className={`text-xs font-medium ${
-                        metric.trend.startsWith('+') ? 'text-green-500' : 'text-red-500'
-                      }`}>
-                        {metric.trend}
-                      </span>
-                    </div>
-                    <p className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">{metric.value}</p>
-                    <div className="h-[80px] sm:h-[100px] w-full">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <AreaChart data={metric.data}>
-                          <defs>
-                            <linearGradient id={`color${metric.title.replace(/\s+/g, '')}`} x1="0" y1="0" x2="0" y2="1">
-                              <stop offset="5%" stopColor={metric.color} stopOpacity={0.1}/>
-                              <stop offset="95%" stopColor={metric.color} stopOpacity={0}/>
-                            </linearGradient>
-                          </defs>
-                          <Tooltip
-                            content={({ active, payload }) => {
-                              if (active && payload && payload.length) {
-                                return (
-                                  <div className="bg-white p-2 rounded-lg shadow-lg border text-xs sm:text-sm">
-                                    <p className="font-medium">
-                                      {metric.format(payload[0].value as number)}
-                                    </p>
-                                  </div>
-                                );
-                              }
-                              return null;
-                            }}
-                          />
-                          <Area
-                            type="monotone"
-                            dataKey="value"
-                            stroke={metric.color}
-                            strokeWidth={2}
-                            fill={`url(#color${metric.title.replace(/\s+/g, '')})`}
-                          />
-                        </AreaChart>
-                      </ResponsiveContainer>
-                    </div>
-                  </Card>
+                  <MetricCard key={metric.title} {...metric} />
                 ))}
               </div>
 
-              <Card className="p-4 sm:p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
-                <h2 className="text-base sm:text-lg font-semibold mb-4">Weekly Performance Trend</h2>
-                <div className="h-[300px] sm:h-[400px] w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={generateTimeData(timeFrame)}>
-                      <defs>
-                        <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.1}/>
-                          <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
-                        </linearGradient>
-                      </defs>
-                      <XAxis 
-                        dataKey="name" 
-                        axisLine={false}
-                        tickLine={false}
-                        tick={{ fill: '#666', fontSize: 10, dy: 10 }}
-                        interval="preserveStartEnd"
-                      />
-                      <YAxis 
-                        axisLine={false}
-                        tickLine={false}
-                        tick={{ fill: '#666', fontSize: 10 }}
-                        width={35}
-                      />
-                      <Tooltip
-                        contentStyle={{
-                          backgroundColor: '#fff',
-                          border: 'none',
-                          borderRadius: '8px',
-                          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-                          fontSize: '12px'
-                        }}
-                      />
-                      <Area
-                        type="monotone"
-                        dataKey="value"
-                        stroke="#3b82f6"
-                        strokeWidth={2}
-                        fill="url(#colorValue)"
-                      />
-                    </AreaChart>
-                  </ResponsiveContainer>
-                </div>
-              </Card>
+              <PerformanceChart data={generateTimeData(timeFrame)} />
             </div>
           </div>
         </main>
