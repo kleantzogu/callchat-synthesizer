@@ -1,8 +1,10 @@
+
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { BarChart2, Clock, Heart, PlayCircle, ThumbsUp, UserCheck, Timer, Volume2, MessageCircle, TrendingUp, Bell, User } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -145,13 +147,13 @@ const Index = () => {
   const getSentimentStyles = (sentiment: 'positive' | 'neutral' | 'negative') => {
     switch (sentiment) {
       case 'positive':
-        return 'bg-green-100 text-green-800';
+        return 'bg-green-100 text-green-800 hover:bg-green-100';
       case 'neutral':
-        return 'bg-yellow-100 text-yellow-800';
+        return 'bg-yellow-100 text-yellow-800 hover:bg-yellow-100';
       case 'negative':
-        return 'bg-red-100 text-red-800';
+        return 'bg-red-100 text-red-800 hover:bg-red-100';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-gray-100 text-gray-800 hover:bg-gray-100';
     }
   };
 
@@ -218,9 +220,9 @@ const Index = () => {
                 {kpis.map(kpi => <Card key={kpi.title} className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
                     <div className="flex items-center justify-between mb-4">
                       {kpi.icon && <kpi.icon className="w-6 h-6 text-primary" />}
-                      <span className={`text-xs font-medium px-3 py-1 rounded-full ${kpi.trend.startsWith('+') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                      <Badge variant="secondary" className={`${kpi.trend.startsWith('+') ? 'bg-green-100 text-green-800 hover:bg-green-100' : 'bg-red-100 text-red-800 hover:bg-red-100'}`}>
                         {kpi.trend}
-                      </span>
+                      </Badge>
                     </div>
                     <h3 className="text-sm font-medium text-muted-foreground">{kpi.title}</h3>
                     <p className="text-2xl font-bold mt-1">{kpi.value}</p>
@@ -247,9 +249,9 @@ const Index = () => {
                       >
                         <div className="flex items-center justify-between mb-2">
                           <span className="text-sm font-medium">Call #{transcript.id}</span>
-                          <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${getSentimentStyles(transcript.metrics.sentiment)}`}>
+                          <Badge variant="secondary" className={getSentimentStyles(transcript.metrics.sentiment)}>
                             {transcript.metrics.sentiment.replace('-', ' ')}
-                          </span>
+                          </Badge>
                         </div>
                         <p className="text-sm text-muted-foreground">{transcript.transcription.slice(0, 100)}...</p>
                       </div>
@@ -292,9 +294,9 @@ const Index = () => {
                       </div>
                       <div className="flex flex-col items-center p-3 bg-secondary/30 rounded-lg">
                         <Volume2 className="w-5 h-5 mb-1 text-primary" />
-                        <span className={`text-sm font-medium capitalize ${selectedTranscript?.metrics.sentiment && getSentimentStyles(selectedTranscript.metrics.sentiment)}`}>
+                        <Badge variant="secondary" className={selectedTranscript?.metrics.sentiment && getSentimentStyles(selectedTranscript.metrics.sentiment)}>
                           {selectedTranscript?.metrics.sentiment}
-                        </span>
+                        </Badge>
                         <span className="text-xs text-muted-foreground">Sentiment</span>
                       </div>
                       <div className="flex flex-col items-center p-3 bg-secondary/30 rounded-lg">
