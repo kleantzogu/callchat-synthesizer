@@ -1,8 +1,10 @@
+
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Bell, Lock, User, Globe } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -76,13 +78,15 @@ const notifications = [
 ];
 
 const Settings = () => {
+  const isMobile = useIsMobile();
+
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
-        <AppSidebar />
+        {!isMobile && <AppSidebar />}
         <main className="flex-1 flex flex-col bg-zinc-100">
           <div className="w-full bg-white border-b">
-            <div className="flex items-center justify-between h-16 px-8">
+            <div className="flex items-center justify-between h-16 px-4 sm:px-8">
               <h2 className="text-xl font-semibold">Settings</h2>
               <div className="flex items-center gap-4">
                 <DropdownMenu>
@@ -129,25 +133,25 @@ const Settings = () => {
             </div>
           </div>
 
-          <div className="flex-1 p-8">
+          <div className="flex-1 p-4 sm:p-8">
             <div className="max-w-7xl mx-auto">
               <header className="mb-8">
-                <h1 className="text-3xl font-bold mb-2 animate-fade-down">Settings</h1>
-                <p className="text-muted-foreground animate-fade-up">Manage your account settings and preferences</p>
+                <h1 className="text-2xl sm:text-3xl font-bold mb-2 animate-fade-down">Settings</h1>
+                <p className="text-sm sm:text-base text-muted-foreground animate-fade-up">Manage your account settings and preferences</p>
               </header>
 
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 {settingSections.map((section) => (
-                  <Card key={section.title} className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
+                  <Card key={section.title} className="p-4 sm:p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
                     <div className="flex items-center gap-3 mb-4">
-                      <section.icon className="w-6 h-6 text-primary" />
+                      <section.icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                       <div>
-                        <h2 className="text-lg font-semibold">{section.title}</h2>
-                        <p className="text-sm text-muted-foreground">{section.description}</p>
+                        <h2 className="text-base sm:text-lg font-semibold">{section.title}</h2>
+                        <p className="text-xs sm:text-sm text-muted-foreground">{section.description}</p>
                       </div>
                     </div>
 
-                    <div className="space-y-4">
+                    <div className="space-y-3 sm:space-y-4">
                       {section.fields.map((field) => (
                         <div key={field.label} className="flex items-center justify-between">
                           <label className="text-sm font-medium">{field.label}</label>
@@ -175,7 +179,7 @@ const Settings = () => {
                   </Card>
                 ))}
 
-                <div className="flex justify-end gap-4">
+                <div className="flex justify-end gap-4 pt-4">
                   <Button variant="outline">Cancel</Button>
                   <Button>Save Changes</Button>
                 </div>
