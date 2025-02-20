@@ -1,13 +1,10 @@
-
 import { Home, MessageSquare, BarChart2, Settings, UserRound } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
-
 type MenuItem = {
   title: string;
   icon: React.ElementType; // Changed from LucideIcon type
   url: string;
 };
-
 const menuItems: MenuItem[] = [{
   title: "Dashboard",
   icon: Home,
@@ -25,7 +22,6 @@ const menuItems: MenuItem[] = [{
   icon: Settings,
   url: "/settings"
 }];
-
 export function AppSidebar() {
   return <Sidebar>
       <SidebarContent className="bg-white">
@@ -40,7 +36,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <a href={item.url} className="flex items-center gap-2">
                       {item.icon && <item.icon className="w-5 h-5" />}
-                      <span>{item.title}</span>
+                      <span className="font-medium">{item.title}</span>
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>)}
