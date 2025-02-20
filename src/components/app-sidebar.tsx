@@ -1,6 +1,8 @@
 
 import { Home, MessageSquare, BarChart2, Settings } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
+import { useLocation } from "react-router-dom";
+
 type MenuItem = {
   title: string;
   icon: React.ElementType;
@@ -27,6 +29,9 @@ const settingsMenuItem: MenuItem = {
 };
 
 export function AppSidebar() {
+  const location = useLocation();
+  const currentPath = location.pathname;
+
   return <Sidebar>
       <SidebarContent className="bg-white">
         <div className="flex flex-row items-center p-4 mb-0">
@@ -59,7 +64,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <a 
                       href={item.url} 
-                      className={`flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md ${item.url === "/" ? "bg-zinc-100 text-zinc-900" : ""}`}
+                      className={`flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md ${item.url === currentPath ? "bg-zinc-100 text-zinc-900" : ""}`}
                     >
                       {item.icon && <item.icon className="w-5 h-5" />}
                       <span>{item.title}</span>
@@ -78,7 +83,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <a 
                       href={settingsMenuItem.url} 
-                      className="flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md"
+                      className={`flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md ${settingsMenuItem.url === currentPath ? "bg-zinc-100 text-zinc-900" : ""}`}
                     >
                       <settingsMenuItem.icon className="w-5 h-5" />
                       <span>{settingsMenuItem.title}</span>
