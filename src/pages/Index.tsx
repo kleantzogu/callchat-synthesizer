@@ -13,6 +13,7 @@ import { useState } from "react";
 import { KPISection } from "@/components/dashboard/KPISection";
 import { RecentTranscripts } from "@/components/dashboard/RecentTranscripts";
 import { PerformanceSection } from "@/components/dashboard/PerformanceSection";
+import { AgentsCard } from "@/components/dashboard/AgentsCard";
 import { generateTimeData } from "@/utils/analyticsData";
 
 const timeFilters = [
@@ -57,10 +58,12 @@ const Index = () => {
 
               <KPISection timeFilter={timeFilter} />
 
-              <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <RecentTranscripts />
+              <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                <AgentsCard />
                 <PerformanceSection data={performanceData} />
               </section>
+
+              <RecentTranscripts />
             </div>
           </div>
         </main>
