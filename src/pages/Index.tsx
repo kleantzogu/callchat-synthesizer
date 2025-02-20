@@ -1,10 +1,16 @@
-
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { BarChart2, Clock, Heart, PlayCircle, ThumbsUp, UserCheck, Timer, Volume2, MessageCircle, TrendingUp, Bell, User } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -140,9 +146,18 @@ const notifications = [
   }
 ];
 
+const timeFilters = [
+  { label: "Today", value: "today" },
+  { label: "Last 7 Days", value: "7days" },
+  { label: "Last 30 Days", value: "30days" },
+  { label: "Last 6 Months", value: "6months" },
+  { label: "Last 12 Months", value: "12months" },
+];
+
 const Index = () => {
   const [selectedTranscript, setSelectedTranscript] = useState<Transcript | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [timeFilter, setTimeFilter] = useState("30days");
 
   const getSentimentStyles = (sentiment: 'positive' | 'neutral' | 'negative') => {
     switch (sentiment) {
@@ -216,7 +231,21 @@ const Index = () => {
           <div className="flex-1 p-8">
             <div className="max-w-7xl mx-auto">
               <header className="mb-8">
-                <h1 className="text-3xl font-bold mb-2 animate-fade-down">Welcome to Kleant</h1>
+                <div className="flex items-center justify-between mb-2">
+                  <h1 className="text-3xl font-bold animate-fade-down">Welcome to Kleant</h1>
+                  <Select value={timeFilter} onValueChange={setTimeFilter}>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Select time range" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {timeFilters.map((filter) => (
+                        <SelectItem key={filter.value} value={filter.value}>
+                          {filter.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
                 <p className="text-muted-foreground animate-fade-up">Monitor and analyze your customer interactions in real-time</p>
               </header>
 
