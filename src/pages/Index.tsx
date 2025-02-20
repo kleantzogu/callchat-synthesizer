@@ -10,34 +10,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useState } from "react";
-import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
 import { KPISection } from "@/components/dashboard/KPISection";
 import { RecentTranscripts } from "@/components/dashboard/RecentTranscripts";
 import { PerformanceSection } from "@/components/dashboard/PerformanceSection";
-
-const notifications = [
-  {
-    id: 1,
-    title: "New transcript available",
-    description: "Call #123 has been transcribed",
-    time: "2 mins ago",
-    unread: true,
-  },
-  {
-    id: 2,
-    title: "Analysis complete",
-    description: "Sentiment analysis finished for call #456",
-    time: "1 hour ago",
-    unread: true,
-  },
-  {
-    id: 3,
-    title: "System update",
-    description: "New features available in the dashboard",
-    time: "2 hours ago",
-    unread: false,
-  }
-];
 
 const timeFilters = [
   { label: "Today", value: "today" },
@@ -56,8 +31,6 @@ const Index = () => {
       <div className="min-h-screen flex w-full">
         {!isMobile && <AppSidebar />}
         <main className="flex-1 flex flex-col bg-zinc-100">
-          <DashboardHeader notifications={notifications} />
-
           <div className="flex-1 p-8">
             <div className="max-w-7xl mx-auto">
               <header className="mb-8">
