@@ -5,22 +5,25 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [keepSignedIn, setKeepSignedIn] = useState(false);
   const navigate = useNavigate();
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
+    
     // Simple test authentication
-    if (email === "a" && password === "a") {
+    if (email === "test@test.com" && password === "1") {
       toast.success("Successfully logged in!");
       navigate("/");
     } else {
       toast.error("Invalid credentials");
     }
   };
+
   return <div className="min-h-screen grid md:grid-cols-2">
       <div className="flex items-center justify-center p-4 bg-white">
         <div className="w-full max-w-md space-y-6">
