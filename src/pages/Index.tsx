@@ -1,4 +1,3 @@
-
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { BarChart2, Clock, Heart, PlayCircle, ThumbsUp, UserCheck, Timer, Volume2, MessageCircle, TrendingUp, Bell, User } from "lucide-react";
@@ -143,14 +142,16 @@ const Index = () => {
   const [selectedTranscript, setSelectedTranscript] = useState<Transcript | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const getSentimentColor = (sentiment: 'positive' | 'neutral' | 'negative') => {
+  const getSentimentStyles = (sentiment: 'positive' | 'neutral' | 'negative') => {
     switch (sentiment) {
       case 'positive':
-        return 'text-green-500';
+        return 'bg-green-100 text-green-800';
+      case 'neutral':
+        return 'bg-yellow-100 text-yellow-800';
       case 'negative':
-        return 'text-red-500';
+        return 'bg-red-100 text-red-800';
       default:
-        return 'text-yellow-500';
+        return 'bg-gray-100 text-gray-800';
     }
   };
 
@@ -217,7 +218,9 @@ const Index = () => {
                 {kpis.map(kpi => <Card key={kpi.title} className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
                     <div className="flex items-center justify-between mb-4">
                       {kpi.icon && <kpi.icon className="w-6 h-6 text-primary" />}
-                      <span className="text-xs font-medium text-green-500">{kpi.trend}</span>
+                      <span className={`text-xs font-medium px-3 py-1 rounded-full ${kpi.trend.startsWith('+') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                        {kpi.trend}
+                      </span>
                     </div>
                     <h3 className="text-sm font-medium text-muted-foreground">{kpi.title}</h3>
                     <p className="text-2xl font-bold mt-1">{kpi.value}</p>
@@ -244,7 +247,9 @@ const Index = () => {
                       >
                         <div className="flex items-center justify-between mb-2">
                           <span className="text-sm font-medium">Call #{transcript.id}</span>
-                          <span className="text-xs text-muted-foreground">{transcript.timestamp}</span>
+                          <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${getSentimentStyles(transcript.metrics.sentiment)}`}>
+                            {transcript.metrics.sentiment.replace('-', ' ')}
+                          </span>
                         </div>
                         <p className="text-sm text-muted-foreground">{transcript.transcription.slice(0, 100)}...</p>
                       </div>
@@ -287,7 +292,7 @@ const Index = () => {
                       </div>
                       <div className="flex flex-col items-center p-3 bg-secondary/30 rounded-lg">
                         <Volume2 className="w-5 h-5 mb-1 text-primary" />
-                        <span className={`text-sm font-medium capitalize ${selectedTranscript?.metrics.sentiment && getSentimentColor(selectedTranscript.metrics.sentiment)}`}>
+                        <span className={`text-sm font-medium capitalize ${selectedTranscript?.metrics.sentiment && getSentimentStyles(selectedTranscript.metrics.sentiment)}`}>
                           {selectedTranscript?.metrics.sentiment}
                         </span>
                         <span className="text-xs text-muted-foreground">Sentiment</span>
