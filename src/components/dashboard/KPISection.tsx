@@ -23,7 +23,7 @@ export function KPISection({ timeFilter }: KPISectionProps) {
       value: "92%",
       trend: "+5.23%",
       icon: ThumbsUp,
-      color: "#16a34a",
+      color: "#000000e6",
       data: generateMetricData(timeFilter, 92, 5),
       format: (value: number) => `${value.toFixed(1)}%`
     },
