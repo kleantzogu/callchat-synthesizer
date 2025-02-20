@@ -36,9 +36,9 @@ export const MetricCard = ({
         </span>
       </div>
       <p className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">{value}</p>
-      <div className="h-[80px] sm:h-[100px] w-full">
+      <div className="h-[80px] sm:h-[100px] w-full -mx-4 sm:-mx-6 -mb-4 sm:-mb-6">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data}>
+          <AreaChart data={data} margin={{ left: 0, right: 0, top: 0, bottom: 0 }}>
             <defs>
               <linearGradient id={`color${title.replace(/\s+/g, '')}`} x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor={color} stopOpacity={0.1}/>
