@@ -213,7 +213,7 @@ const Settings = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 {settingSections.map((section) => (
-                  <Card key={section.title} className="p-4 sm:p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
+                  <Card key={section.title} className="flex flex-col p-4 sm:p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white h-[280px]">
                     <div className="flex items-center gap-3 mb-4">
                       <section.icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                       <div>
@@ -222,7 +222,7 @@ const Settings = () => {
                       </div>
                     </div>
 
-                    <div className="space-y-3 sm:space-y-4">
+                    <div className="flex-1 space-y-3 sm:space-y-4">
                       {section.fields.map((field) => (
                         <div key={field.label} className="flex items-center justify-between">
                           <label className="text-sm font-medium">{field.label}</label>
