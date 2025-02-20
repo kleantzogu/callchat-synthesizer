@@ -99,6 +99,21 @@ const Transcripts = () => {
     currentPage * ITEMS_PER_PAGE
   );
 
+  const getSentimentStyles = (sentiment: string) => {
+    switch (sentiment) {
+      case 'Positive':
+        return 'bg-green-100 text-green-800';
+      case 'Neutral':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'Bad':
+        return 'bg-orange-100 text-orange-800';
+      case 'Very Bad':
+        return 'bg-red-100 text-red-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
+    }
+  };
+
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
@@ -193,15 +208,15 @@ const Transcripts = () => {
                     Positive
                   </TabsTrigger>
                   <TabsTrigger value="neutral" className="flex items-center gap-2">
-                    <MinusCircle className="w-4 h-4" />
+                    <MinusCircle className="w-4 h-4 text-yellow-500" />
                     Neutral
                   </TabsTrigger>
                   <TabsTrigger value="bad" className="flex items-center gap-2">
-                    <AlertCircle className="w-4 h-4" />
+                    <AlertCircle className="w-4 h-4 text-orange-500" />
                     Bad
                   </TabsTrigger>
                   <TabsTrigger value="very-bad" className="flex items-center gap-2">
-                    <XCircle className="w-4 h-4" />
+                    <XCircle className="w-4 h-4 text-red-500" />
                     Very Bad
                   </TabsTrigger>
                 </TabsList>
@@ -227,7 +242,7 @@ const Transcripts = () => {
                         </div>
                       </div>
                       <div className="text-right">
-                        <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${getSentimentStyles(transcript.sentiment)}`}>
                           {transcript.sentiment}
                         </span>
                         <p className="text-sm text-muted-foreground mt-2">{transcript.status}</p>
