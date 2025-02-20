@@ -1,3 +1,4 @@
+
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { MessageSquare, Search, Bell, User } from "lucide-react";
@@ -116,21 +117,22 @@ const Transcripts = () => {
 
           <div className="flex-1 p-8">
             <div className="max-w-7xl mx-auto">
-              <header className="mb-8">
-                <h1 className="text-3xl font-bold mb-2 animate-fade-down">Transcripts</h1>
-                <p className="text-muted-foreground animate-fade-up">Review and analyze your conversation transcripts</p>
-              </header>
-
-              <Card className="p-6 mb-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                  <input
-                    type="text"
-                    placeholder="Search transcripts..."
-                    className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                  />
+              <div className="flex justify-between items-start mb-8">
+                <div>
+                  <h1 className="text-3xl font-bold mb-2 animate-fade-down">Transcripts</h1>
+                  <p className="text-muted-foreground animate-fade-up">Review and analyze your conversation transcripts</p>
                 </div>
-              </Card>
+                <div className="w-80">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <input
+                      type="text"
+                      placeholder="Search transcripts..."
+                      className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    />
+                  </div>
+                </div>
+              </div>
 
               <div className="space-y-4">
                 {transcripts.map((transcript) => (
