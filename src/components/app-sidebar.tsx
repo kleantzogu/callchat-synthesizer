@@ -6,7 +6,7 @@ type MenuItem = {
   icon: React.ElementType;
   url: string;
 };
-const menuItems: MenuItem[] = [{
+const mainMenuItems: MenuItem[] = [{
   title: "Dashboard",
   icon: Home,
   url: "/"
@@ -18,11 +18,14 @@ const menuItems: MenuItem[] = [{
   title: "Analytics",
   icon: BarChart2,
   url: "/analytics"
-}, {
+}];
+
+const settingsMenuItem: MenuItem = {
   title: "Settings",
   icon: Settings,
   url: "/settings"
-}];
+};
+
 export function AppSidebar() {
   return <Sidebar>
       <SidebarContent className="bg-white">
@@ -52,7 +55,7 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {menuItems.map(item => <SidebarMenuItem key={item.title}>
+              {mainMenuItems.map(item => <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <a href={item.url} className="flex items-center gap-2 font-medium transition-colors duration-200 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md">
                       {item.icon && <item.icon className="w-5 h-5" />}
@@ -63,6 +66,23 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+        
+        <div className="mt-auto">
+          <SidebarGroup>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <a href={settingsMenuItem.url} className="flex items-center gap-2 font-medium transition-colors duration-200 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md">
+                      <settingsMenuItem.icon className="w-5 h-5" />
+                      <span>{settingsMenuItem.title}</span>
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </div>
       </SidebarContent>
     </Sidebar>;
 }
