@@ -1,3 +1,4 @@
+
 import { Home, MessageSquare, BarChart2, Settings } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 type MenuItem = {
@@ -53,7 +54,7 @@ export function AppSidebar() {
             <SidebarMenu>
               {menuItems.map(item => <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url} className="flex items-center gap-2">
+                    <a href={item.url} className="flex items-center gap-2 font-medium">
                       {item.icon && <item.icon className="w-5 h-5" />}
                       <span>{item.title}</span>
                     </a>
