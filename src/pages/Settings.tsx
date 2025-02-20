@@ -116,9 +116,9 @@ const Settings = () => {
             pressed={toggleStates[field.label] || false}
             onPressedChange={() => handleToggle(field.label)}
             aria-label={field.label}
-            className="bg-zinc-200 hover:bg-zinc-300 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground w-[42px] h-[24px] rounded-full relative px-0.5 transition-all duration-200"
+            className="relative px-0 h-6 w-11 bg-zinc-200 hover:bg-zinc-300 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground rounded-full"
           >
-            <div className="w-[18px] h-[18px] bg-white rounded-full absolute top-[3px] left-[3px] transition-all duration-200 transform data-[state=on]:translate-x-[18px]" />
+            <span className="absolute left-[2px] transition-transform h-5 w-5 rounded-full bg-white data-[state=on]:translate-x-[20px]" data-state={toggleStates[field.label] ? 'on' : 'off'} />
           </Toggle>
         );
       case "select":
