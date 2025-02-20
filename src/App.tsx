@@ -9,16 +9,14 @@ import Notifications from "./pages/Notifications";
 import ChangePassword from "./pages/ChangePassword";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import { useState } from "react";
+import { ThemeProvider } from "./hooks/use-theme";
 
 // Protected Route wrapper component
 const ProtectedRoute = () => {
-  // Check if user is logged in by looking for some authentication token
   const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
   const location = useLocation();
 
   if (!isAuthenticated) {
-    // Redirect to login page if not authenticated, but save the location they tried to access
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
@@ -75,5 +73,9 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <ThemeProvider defaultTheme="light">
+      <RouterProvider router={router} />
+    </ThemeProvider>
+  );
 }

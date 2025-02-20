@@ -1,5 +1,4 @@
-
-import { Home, MessageSquare, BarChart2, Settings, User, Bell, LogOut, Lock, Moon, Sun } from "lucide-react";
+import { Home, MessageSquare, BarChart2, Settings, User, Bell, LogOut, Lock } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import {
@@ -9,10 +8,8 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { Toggle } from "@/components/ui/toggle";
 import { toast } from "sonner";
-import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 type MenuItem = {
   title: string;
@@ -70,22 +67,6 @@ export function AppSidebar() {
   const location = useLocation();
   const navigate = useNavigate();
   const currentPath = location.pathname;
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
-    if (savedTheme) {
-      setTheme(savedTheme);
-      document.documentElement.classList.toggle("dark", savedTheme === "dark");
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-    document.documentElement.classList.toggle("dark", newTheme === "dark");
-  };
 
   const handleLogout = () => {
     localStorage.removeItem("isAuthenticated");
@@ -174,22 +155,7 @@ export function AppSidebar() {
             <SidebarGroupContent>
               <SidebarMenu>
                 <SidebarMenuItem>
-                  <div className="flex items-center justify-between px-2 py-3">
-                    <span className="text-sm font-medium text-zinc-600 dark:text-zinc-400">Dark Mode</span>
-                    <Toggle 
-                      pressed={theme === "dark"} 
-                      onPressedChange={toggleTheme}
-                      variant="switch"
-                      className="relative"
-                    >
-                      <span className="absolute left-1 right-1 top-1 bottom-1">
-                        <span className={cn(
-                          "block h-4 w-4 rounded-full bg-white transition-transform",
-                          theme === "dark" ? "translate-x-[18px]" : "translate-x-0"
-                        )} />
-                      </span>
-                    </Toggle>
-                  </div>
+                  <ThemeToggle />
                 </SidebarMenuItem>
                 {settingsMenuItems.map((item) => (
                   <SidebarMenuItem key={item.title}>
