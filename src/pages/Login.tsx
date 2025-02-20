@@ -1,9 +1,10 @@
+
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { toast } from "sonner";
 
 export default function Login() {
@@ -11,14 +12,19 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [keepSignedIn, setKeepSignedIn] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     // Simple test authentication
     if (email === "test@test.com" && password === "1") {
+      localStorage.setItem("isAuthenticated", "true");
       toast.success("Successfully logged in!");
-      navigate("/");
+      
+      // Navigate to the page they tried to access, or dashboard if they came directly to login
+      const from = location.state?.from?.pathname || "/dashboard";
+      navigate(from);
     } else {
       toast.error("Invalid credentials");
     }

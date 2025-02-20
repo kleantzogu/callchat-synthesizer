@@ -68,6 +68,7 @@ export function AppSidebar() {
   const currentPath = location.pathname;
 
   const handleLogout = () => {
+    localStorage.removeItem("isAuthenticated");
     toast.success("Successfully logged out!");
     navigate("/login");
   };
