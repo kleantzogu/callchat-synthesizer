@@ -211,7 +211,7 @@ const Settings = () => {
                 </p>
               </header>
 
-              <div className="space-y-4 sm:space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 {settingSections.map((section) => (
                   <Card key={section.title} className="p-4 sm:p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
                     <div className="flex items-center gap-3 mb-4">
@@ -233,7 +233,7 @@ const Settings = () => {
                   </Card>
                 ))}
 
-                <div className="flex justify-end gap-4 pt-4">
+                <div className="md:col-span-2 flex justify-end gap-4 pt-4">
                   <Button variant="outline">Cancel</Button>
                   <Button>Save Changes</Button>
                 </div>
