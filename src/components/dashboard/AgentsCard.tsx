@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { ThumbsUp, Clock, Star } from "lucide-react";
@@ -76,7 +77,24 @@ const agents: Agent[] = [
       negative: 7
     },
     totalCallDuration: "28h 15m",
-    score: 4.6
+    score: 4.6,
+    lastTranscript: {
+      id: 1002,
+      audio: "https://example.com/audio2.mp3",
+      transcription: "Customer: I'm having trouble with my login.\n\nMichael: Let me help you with that. Can you tell me what happens when you try to log in?\n\nCustomer: It says 'invalid credentials' but I'm sure my password is correct.\n\nMichael: I'll help you reset your password to resolve this issue.",
+      duration: "4:15",
+      timestamp: "3 hours ago",
+      metrics: {
+        sentiment: "neutral",
+        customerSatisfaction: 85,
+        speakingRatio: {
+          agent: 55,
+          customer: 45
+        },
+        tone: ["patient", "technical", "clear"],
+        wordCount: 52
+      }
+    }
   },
   {
     id: 3,
@@ -89,7 +107,24 @@ const agents: Agent[] = [
       negative: 3
     },
     totalCallDuration: "35h 20m",
-    score: 4.9
+    score: 4.9,
+    lastTranscript: {
+      id: 1003,
+      audio: "https://example.com/audio3.mp3",
+      transcription: "Customer: I want to thank you for your excellent service!\n\nEmma: That's very kind of you! I'm glad I could help. Is there anything else you need assistance with?\n\nCustomer: No, that's all. Have a great day!\n\nEmma: You too! Thank you for choosing our service.",
+      duration: "3:45",
+      timestamp: "1 hour ago",
+      metrics: {
+        sentiment: "positive",
+        customerSatisfaction: 98,
+        speakingRatio: {
+          agent: 50,
+          customer: 50
+        },
+        tone: ["friendly", "appreciative", "positive"],
+        wordCount: 45
+      }
+    }
   },
   {
     id: 4,
@@ -102,7 +137,24 @@ const agents: Agent[] = [
       negative: 8
     },
     totalCallDuration: "25h 30m",
-    score: 4.5
+    score: 4.5,
+    lastTranscript: {
+      id: 1004,
+      audio: "https://example.com/audio4.mp3",
+      transcription: "Customer: My shipment is delayed. Can you help?\n\nJames: Of course! Let me check the status for you. Could you provide your tracking number?\n\nCustomer: It's TRK789.\n\nJames: I see the delay. Let me contact our shipping partner to expedite this.",
+      duration: "6:10",
+      timestamp: "4 hours ago",
+      metrics: {
+        sentiment: "neutral",
+        customerSatisfaction: 88,
+        speakingRatio: {
+          agent: 65,
+          customer: 35
+        },
+        tone: ["proactive", "solution-oriented", "professional"],
+        wordCount: 42
+      }
+    }
   }
 ];
 
