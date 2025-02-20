@@ -29,7 +29,7 @@ export default function Login() {
     <div className="min-h-screen bg-white flex items-center justify-center p-4">
       <div className="w-full max-w-md space-y-6">
         <div className="space-y-2">
-          <img src="/public/placeholder.svg" alt="Logo" className="w-12 h-12" />
+          <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e" alt="Logo" className="w-12 h-12 rounded-full object-cover" />
           <h1 className="text-3xl font-bold tracking-tight">Sign in</h1>
           <p className="text-zinc-500">
             Log in to unlock tailored content and stay connected with your community.
