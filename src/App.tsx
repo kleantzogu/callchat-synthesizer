@@ -7,11 +7,21 @@ import Transcripts from "./pages/Transcripts";
 import NotFound from "./pages/NotFound";
 import Notifications from "./pages/Notifications";
 import ChangePassword from "./pages/ChangePassword";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Index />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
   },
   {
     path: "/analytics",
