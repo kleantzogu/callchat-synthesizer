@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { ThumbsUp, Clock, Star } from "lucide-react";
@@ -35,128 +34,51 @@ export interface Agent {
   };
 }
 
-const agents: Agent[] = [
-  {
-    id: 1,
-    name: "Sarah Johnson",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah",
-    callCount: 145,
-    sentiment: {
-      positive: 75,
-      neutral: 20,
-      negative: 5
-    },
-    totalCallDuration: "32h 45m",
-    score: 4.8,
-    lastTranscript: {
-      id: 1001,
-      audio: "https://example.com/audio1.mp3",
-      transcription: "Customer: Hi, I need help with my order.\n\nSarah: I'd be happy to help you with that. Could you please provide your order number?\n\nCustomer: Yes, it's ORDER123.\n\nSarah: Thank you, I can see your order here. What seems to be the issue?",
-      duration: "5:23",
-      timestamp: "2 hours ago",
-      metrics: {
-        sentiment: "positive",
-        customerSatisfaction: 95,
-        speakingRatio: {
-          agent: 60,
-          customer: 40
-        },
-        tone: ["helpful", "professional", "empathetic"],
-        wordCount: 48
+const generateAgents = (count: number): Agent[] => {
+  const firstNames = ["Sarah", "Michael", "Emma", "James", "David", "Lisa", "John", "Emily", "Robert", "Jessica"];
+  const lastNames = ["Johnson", "Chen", "Davis", "Wilson", "Brown", "Taylor", "Smith", "Anderson", "Martinez", "Thompson"];
+  
+  return Array.from({ length: count }, (_, index) => {
+    const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+    const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+    const name = `${firstName} ${lastName}`;
+    
+    return {
+      id: index + 1,
+      name,
+      avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${name}`,
+      callCount: Math.floor(Math.random() * 100) + 50,
+      sentiment: {
+        positive: Math.floor(Math.random() * 30) + 60,
+        neutral: Math.floor(Math.random() * 20) + 10,
+        negative: Math.floor(Math.random() * 10)
+      },
+      totalCallDuration: `${Math.floor(Math.random() * 40) + 10}h ${Math.floor(Math.random() * 60)}m`,
+      score: Number((Math.random() * (5 - 3.5) + 3.5).toFixed(1)),
+      lastTranscript: {
+        id: 1000 + index,
+        audio: "https://example.com/audio.mp3",
+        transcription: `Customer: Hi, I need help.\n\n${name}: I'd be happy to help you. What seems to be the issue?\n\nCustomer: Thank you for your assistance.\n\n${name}: You're welcome! Is there anything else I can help you with?`,
+        duration: `${Math.floor(Math.random() * 10) + 2}:${String(Math.floor(Math.random() * 60)).padStart(2, '0')}`,
+        timestamp: `${Math.floor(Math.random() * 12) + 1} hours ago`,
+        metrics: {
+          sentiment: ["positive", "neutral", "negative"][Math.floor(Math.random() * 3)] as "positive" | "neutral" | "negative",
+          customerSatisfaction: Math.floor(Math.random() * 30) + 70,
+          speakingRatio: {
+            agent: Math.floor(Math.random() * 20) + 50,
+            customer: Math.floor(Math.random() * 20) + 30
+          },
+          tone: ["helpful", "professional", "empathetic", "friendly", "patient", "technical"]
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 3),
+          wordCount: Math.floor(Math.random() * 100) + 30
+        }
       }
-    }
-  },
-  {
-    id: 2,
-    name: "Michael Chen",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Michael",
-    callCount: 128,
-    sentiment: {
-      positive: 68,
-      neutral: 25,
-      negative: 7
-    },
-    totalCallDuration: "28h 15m",
-    score: 4.6,
-    lastTranscript: {
-      id: 1002,
-      audio: "https://example.com/audio2.mp3",
-      transcription: "Customer: I'm having trouble with my login.\n\nMichael: Let me help you with that. Can you tell me what happens when you try to log in?\n\nCustomer: It says 'invalid credentials' but I'm sure my password is correct.\n\nMichael: I'll help you reset your password to resolve this issue.",
-      duration: "4:15",
-      timestamp: "3 hours ago",
-      metrics: {
-        sentiment: "neutral",
-        customerSatisfaction: 85,
-        speakingRatio: {
-          agent: 55,
-          customer: 45
-        },
-        tone: ["patient", "technical", "clear"],
-        wordCount: 52
-      }
-    }
-  },
-  {
-    id: 3,
-    name: "Emma Davis",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Emma",
-    callCount: 156,
-    sentiment: {
-      positive: 82,
-      neutral: 15,
-      negative: 3
-    },
-    totalCallDuration: "35h 20m",
-    score: 4.9,
-    lastTranscript: {
-      id: 1003,
-      audio: "https://example.com/audio3.mp3",
-      transcription: "Customer: I want to thank you for your excellent service!\n\nEmma: That's very kind of you! I'm glad I could help. Is there anything else you need assistance with?\n\nCustomer: No, that's all. Have a great day!\n\nEmma: You too! Thank you for choosing our service.",
-      duration: "3:45",
-      timestamp: "1 hour ago",
-      metrics: {
-        sentiment: "positive",
-        customerSatisfaction: 98,
-        speakingRatio: {
-          agent: 50,
-          customer: 50
-        },
-        tone: ["friendly", "appreciative", "positive"],
-        wordCount: 45
-      }
-    }
-  },
-  {
-    id: 4,
-    name: "James Wilson",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=James",
-    callCount: 112,
-    sentiment: {
-      positive: 70,
-      neutral: 22,
-      negative: 8
-    },
-    totalCallDuration: "25h 30m",
-    score: 4.5,
-    lastTranscript: {
-      id: 1004,
-      audio: "https://example.com/audio4.mp3",
-      transcription: "Customer: My shipment is delayed. Can you help?\n\nJames: Of course! Let me check the status for you. Could you provide your tracking number?\n\nCustomer: It's TRK789.\n\nJames: I see the delay. Let me contact our shipping partner to expedite this.",
-      duration: "6:10",
-      timestamp: "4 hours ago",
-      metrics: {
-        sentiment: "neutral",
-        customerSatisfaction: 88,
-        speakingRatio: {
-          agent: 65,
-          customer: 35
-        },
-        tone: ["proactive", "solution-oriented", "professional"],
-        wordCount: 42
-      }
-    }
-  }
-];
+    };
+  });
+};
+
+const agents: Agent[] = generateAgents(55);
 
 export function AgentsCard() {
   const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
