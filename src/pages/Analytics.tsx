@@ -16,6 +16,51 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useState } from "react";
+
+const generateTimeData = (timeFrame: string) => {
+  switch (timeFrame) {
+    case 'today':
+      return Array.from({ length: 24 }, (_, i) => ({
+        name: `${i}:00`,
+        value: 80 + Math.random() * 20
+      }));
+    case '7days':
+      return ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(day => ({
+        name: day,
+        value: 80 + Math.random() * 20
+      }));
+    case '30days':
+      return Array.from({ length: 30 }, (_, i) => ({
+        name: `Day ${i + 1}`,
+        value: 80 + Math.random() * 20
+      }));
+    case '6months':
+      return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'].map(month => ({
+        name: month,
+        value: 80 + Math.random() * 20
+      }));
+    case '12months':
+      return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map(month => ({
+        name: month,
+        value: 80 + Math.random() * 20
+      }));
+    default:
+      return [];
+  }
+};
+
+const generateMetricData = (timeFrame: string, baseValue: number, variance: number) => {
+  const length = timeFrame === 'today' ? 24 : 
+                timeFrame === '7days' ? 7 :
+                timeFrame === '30days' ? 30 :
+                timeFrame === '6months' ? 6 : 12;
+
+  return Array.from({ length }, (_, i) => ({
+    name: i.toString(),
+    value: baseValue + (Math.random() - 0.5) * variance
+  }));
+};
 
 const weeklyData = [
   { name: 'Mon', value: 85 },
@@ -33,56 +78,36 @@ const metricCards = [
     value: "2.5 min",
     trend: "-12%",
     icon: Timer,
-    data: [
-      { name: '1', value: 3 },
-      { name: '2', value: 2.8 },
-      { name: '3', value: 2.6 },
-      { name: '4', value: 2.5 },
-      { name: '5', value: 2.3 },
-    ],
-    color: "#3b82f6"
+    data: generateMetricData('7days', 2.5, 1),
+    color: "#3b82f6",
+    format: (value: number) => `${value.toFixed(1)} min`
   },
   {
     title: "Satisfaction",
     value: "92%",
     trend: "+5%",
     icon: SmileIcon,
-    data: [
-      { name: '1', value: 85 },
-      { name: '2', value: 88 },
-      { name: '3', value: 90 },
-      { name: '4', value: 91 },
-      { name: '5', value: 92 },
-    ],
-    color: "#10b981"
+    data: generateMetricData('7days', 92, 10),
+    color: "#10b981",
+    format: (value: number) => `${value.toFixed(0)}%`
   },
   {
     title: "Service Quality",
     value: "4.8/5",
     trend: "+0.3",
     icon: Award,
-    data: [
-      { name: '1', value: 4.5 },
-      { name: '2', value: 4.6 },
-      { name: '3', value: 4.7 },
-      { name: '4', value: 4.7 },
-      { name: '5', value: 4.8 },
-    ],
-    color: "#8b5cf6"
+    data: generateMetricData('7days', 4.8, 0.5),
+    color: "#8b5cf6",
+    format: (value: number) => `${value.toFixed(1)}/5`
   },
   {
     title: "Resolution Rate",
     value: "95%",
     trend: "+8%",
     icon: CheckCircle,
-    data: [
-      { name: '1', value: 87 },
-      { name: '2', value: 89 },
-      { name: '3', value: 91 },
-      { name: '4', value: 93 },
-      { name: '5', value: 95 },
-    ],
-    color: "#f59e0b"
+    data: generateMetricData('7days', 95, 8),
+    color: "#f59e0b",
+    format: (value: number) => `${value.toFixed(0)}%`
   }
 ];
 
@@ -135,6 +160,8 @@ const notifications = [
 ];
 
 const Analytics = () => {
+  const [timeFrame, setTimeFrame] = useState('7days');
+
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
@@ -195,7 +222,7 @@ const Analytics = () => {
                   <h1 className="text-3xl font-bold mb-2 animate-fade-down">Analytics</h1>
                   <p className="text-muted-foreground animate-fade-up">Track and analyze your performance metrics</p>
                 </div>
-                <Select defaultValue="7days">
+                <Select defaultValue="7days" onValueChange={setTimeFrame}>
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Select time period" />
                   </SelectTrigger>
@@ -233,6 +260,20 @@ const Analytics = () => {
                               <stop offset="95%" stopColor={metric.color} stopOpacity={0}/>
                             </linearGradient>
                           </defs>
+                          <Tooltip
+                            content={({ active, payload }) => {
+                              if (active && payload && payload.length) {
+                                return (
+                                  <div className="bg-white p-2 rounded-lg shadow-lg border">
+                                    <p className="font-medium text-sm">
+                                      {metric.format(payload[0].value as number)}
+                                    </p>
+                                  </div>
+                                );
+                              }
+                              return null;
+                            }}
+                          />
                           <Area
                             type="monotone"
                             dataKey="value"
@@ -251,7 +292,7 @@ const Analytics = () => {
                 <h2 className="text-lg font-semibold mb-4">Weekly Performance Trend</h2>
                 <div className="h-[400px] w-full">
                   <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={weeklyData}>
+                    <AreaChart data={generateTimeData(timeFrame)}>
                       <defs>
                         <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
                           <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.1}/>
