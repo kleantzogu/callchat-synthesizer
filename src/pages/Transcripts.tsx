@@ -1,7 +1,6 @@
-
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
-import { MessageSquare, Search, Bell, User, PlayCircle, Timer, Volume2, MessageCircle, TrendingUp, CheckCircle, MinusCircle, AlertCircle, XCircle } from "lucide-react";
+import { MessageSquare, Search, Bell, User, PlayCircle, Timer, Volume2, MessageCircle, TrendingUp, CheckCircle, MinusCircle, AlertCircle, XCircle, ChevronLeft, ChevronRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -80,6 +79,74 @@ const transcripts = [
       tone: ["helpful", "clear"],
       wordCount: 28
     }
+  },
+  {
+    id: 4,
+    date: "2024-03-09",
+    duration: "18:45",
+    topic: "Product Inquiry",
+    sentiment: "Positive",
+    status: "Completed",
+    audio: "https://example.com/audio4.mp3",
+    transcription: "Customer: I want to upgrade my subscription.\n\nAgent: I'll help you with the upgrade process. Let me explain the available options.",
+    metrics: {
+      sentiment: "positive",
+      customerSatisfaction: 95,
+      speakingRatio: { agent: 55, customer: 45 },
+      tone: ["helpful", "informative"],
+      wordCount: 22
+    }
+  },
+  {
+    id: 5,
+    date: "2024-03-09",
+    duration: "09:30",
+    topic: "Technical Support",
+    sentiment: "Bad",
+    status: "Completed",
+    audio: "https://example.com/audio5.mp3",
+    transcription: "Customer: My app keeps crashing.\n\nAgent: Let's troubleshoot this together. When did you first notice the issue?",
+    metrics: {
+      sentiment: "bad",
+      customerSatisfaction: 60,
+      speakingRatio: { agent: 60, customer: 40 },
+      tone: ["professional", "technical"],
+      wordCount: 18
+    }
+  },
+  {
+    id: 6,
+    date: "2024-03-08",
+    duration: "14:20",
+    topic: "Billing Question",
+    sentiment: "Very Bad",
+    status: "In Review",
+    audio: "https://example.com/audio6.mp3",
+    transcription: "Customer: I was charged twice!\n\nAgent: I apologize for the inconvenience. Let me check your billing history right away.",
+    metrics: {
+      sentiment: "very-bad",
+      customerSatisfaction: 40,
+      speakingRatio: { agent: 70, customer: 30 },
+      tone: ["apologetic", "concerned"],
+      wordCount: 16
+    }
+  },
+  {
+    id: 7,
+    date: "2024-03-08",
+    duration: "11:15",
+    topic: "Product Inquiry",
+    sentiment: "Neutral",
+    status: "Completed",
+    audio: "https://example.com/audio7.mp3",
+    transcription: "Customer: What's the difference between basic and premium?\n\nAgent: Let me outline the key differences in features and pricing.",
+    metrics: {
+      sentiment: "neutral",
+      customerSatisfaction: 80,
+      speakingRatio: { agent: 65, customer: 35 },
+      tone: ["informative", "clear"],
+      wordCount: 20
+    }
   }
 ];
 
@@ -107,11 +174,14 @@ const notifications = [
   }
 ];
 
+const ITEMS_PER_PAGE = 5;
+
 const Transcripts = () => {
   const [selectedTranscript, setSelectedTranscript] = useState<typeof transcripts[0] | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("all");
   const [supportType, setSupportType] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const filteredTranscripts = transcripts.filter(transcript => {
     const matchesSentiment = activeTab === "all" || 
@@ -124,6 +194,12 @@ const Transcripts = () => {
 
     return matchesSentiment && matchesSupportType;
   });
+
+  const totalPages = Math.ceil(filteredTranscripts.length / ITEMS_PER_PAGE);
+  const paginatedTranscripts = filteredTranscripts.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
 
   return (
     <SidebarProvider>
@@ -230,7 +306,7 @@ const Transcripts = () => {
               </Tabs>
 
               <Card className="divide-y bg-white">
-                {filteredTranscripts.map((transcript, index) => (
+                {paginatedTranscripts.map((transcript, index) => (
                   <div
                     key={transcript.id}
                     onClick={() => {
@@ -258,6 +334,43 @@ const Transcripts = () => {
                   </div>
                 ))}
               </Card>
+
+              {totalPages > 1 && (
+                <div className="flex items-center justify-between pt-4">
+                  <div className="text-sm text-muted-foreground">
+                    Showing {((currentPage - 1) * ITEMS_PER_PAGE) + 1} to {Math.min(currentPage * ITEMS_PER_PAGE, filteredTranscripts.length)} of {filteredTranscripts.length} results
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <button
+                      onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                      disabled={currentPage === 1}
+                      className="p-2 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <ChevronLeft className="w-5 h-5" />
+                    </button>
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                      <button
+                        key={page}
+                        onClick={() => setCurrentPage(page)}
+                        className={`w-8 h-8 rounded-lg ${
+                          currentPage === page
+                            ? "bg-primary text-white"
+                            : "hover:bg-gray-100"
+                        }`}
+                      >
+                        {page}
+                      </button>
+                    ))}
+                    <button
+                      onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                      disabled={currentPage === totalPages}
+                      className="p-2 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </main>
