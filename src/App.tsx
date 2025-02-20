@@ -28,7 +28,7 @@ const router = createBrowserRouter([
     element: <ProtectedRoute />,
     children: [
       {
-        index: true,
+        path: "",
         element: <Navigate to="/dashboard" replace />,
       },
       {
@@ -58,11 +58,11 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/login",
+    path: "login",
     element: <Login />,
   },
   {
-    path: "/register",
+    path: "register",
     element: <Register />,
   },
   {
