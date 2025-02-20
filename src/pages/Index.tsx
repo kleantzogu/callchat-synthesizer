@@ -1,16 +1,13 @@
-
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { BarChart2, Clock, Heart, ThumbsUp, UserCheck } from "lucide-react";
 import { Card } from "@/components/ui/card";
-
 type KPI = {
   title: string;
   value: string;
   icon: React.ElementType; // Changed from LucideIcon type
   trend: string;
 };
-
 const kpis: KPI[] = [{
   title: "Response Time",
   value: "1.5s",
@@ -32,7 +29,6 @@ const kpis: KPI[] = [{
   icon: UserCheck,
   trend: "+1%"
 }];
-
 const Index = () => {
   return <SidebarProvider>
       <div className="min-h-screen flex w-full">
@@ -91,5 +87,4 @@ const Index = () => {
       </div>
     </SidebarProvider>;
 };
-
 export default Index;
