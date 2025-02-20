@@ -12,6 +12,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useState } from "react";
 
 type FieldType = "text" | "email" | "toggle" | "number" | "select";
 
@@ -96,14 +97,24 @@ const notifications = [
 
 const Settings = () => {
   const isMobile = useIsMobile();
+  const [toggleStates, setToggleStates] = useState<Record<string, boolean>>({});
 
-  const renderField = (field: SettingField) => {
-    if (!field || !field.type) return null;
+  const handleToggle = (label: string) => {
+    setToggleStates(prev => ({
+      ...prev,
+      [label]: !prev[label]
+    }));
+  };
+
+  const renderField = (field: SettingField | null) => {
+    if (!field?.type) return null;
 
     switch (field.type) {
       case "toggle":
         return (
           <Toggle
+            pressed={toggleStates[field.label] || false}
+            onPressedChange={() => handleToggle(field.label)}
             aria-label={field.label}
             className="bg-zinc-200 hover:bg-zinc-300 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground w-[42px] h-[24px] rounded-full relative px-0.5 transition-all duration-200"
           >
@@ -195,7 +206,9 @@ const Settings = () => {
             <div className="max-w-7xl mx-auto">
               <header className="mb-8">
                 <h1 className="text-2xl sm:text-3xl font-bold mb-2 animate-fade-down">Settings</h1>
-                <p className="text-sm sm:text-base text-muted-foreground animate-fade-up">Manage your account settings and preferences</p>
+                <p className="text-sm sm:text-base text-muted-foreground animate-fade-up">
+                  Manage your account settings and preferences
+                </p>
               </header>
 
               <div className="space-y-4 sm:space-y-6">
