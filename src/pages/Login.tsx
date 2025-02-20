@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -26,11 +25,12 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-4">
-      <div className="w-full max-w-md space-y-6">
-        <div className="space-y-2">
-          <svg width="228" height="52" viewBox="0 0 228 52" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-32">
-            <path d="M217.574 14.0616H221.814V18.8616H227.414V22.3016H221.814V33.9816C221.814 35.7016 222.654 36.5816 224.294 36.5816H227.374V40.0616H223.854C219.774 40.0616 217.574 37.9416 217.574 33.9816V22.3016H214.334V18.8616H217.574V14.0616Z" fill="black"/>
+    <div className="min-h-screen grid md:grid-cols-2">
+      <div className="flex items-center justify-center p-4 bg-white">
+        <div className="w-full max-w-md space-y-6">
+          <div className="space-y-2">
+            <svg width="228" height="52" viewBox="0 0 228 52" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-32">
+              <path d="M217.574 14.0616H221.814V18.8616H227.414V22.3016H221.814V33.9816C221.814 35.7016 222.654 36.5816 224.294 36.5816H227.374V40.0616H223.854C219.774 40.0616 217.574 37.9416 217.574 33.9816V22.3016H214.334V18.8616H217.574V14.0616Z" fill="black"/>
             <path d="M209.869 25.5416C209.429 23.2616 207.309 21.9016 205.109 21.9016C202.949 21.9016 201.189 23.0216 201.189 24.9016C201.229 26.8216 203.669 27.5816 205.909 28.0216C211.189 28.9816 214.549 30.3816 214.549 34.5416C214.549 38.7016 210.389 40.5416 205.869 40.5416C200.469 40.5416 196.589 37.8216 196.269 33.3816L200.629 33.1016C201.069 35.5016 202.909 37.0216 205.829 37.0216C207.749 37.0216 210.149 36.3416 210.149 34.3416C210.109 32.0616 207.429 31.7816 205.149 31.2616C200.629 30.3016 196.789 29.0616 196.789 25.0216C196.789 20.9016 200.149 18.3816 205.429 18.3816C210.029 18.3816 213.549 21.0616 214.229 25.3016L209.869 25.5416Z" fill="black"/>
             <path d="M190.074 18.8615H194.314V40.0615H190.074V18.8615ZM189.994 15.7415V11.7015H194.434V15.7415H189.994Z" fill="black"/>
             <path d="M184.141 25.5416C183.701 23.2616 181.581 21.9016 179.381 21.9016C177.221 21.9016 175.461 23.0216 175.461 24.9016C175.501 26.8216 177.941 27.5816 180.181 28.0216C185.461 28.9816 188.821 30.3816 188.821 34.5416C188.821 38.7016 184.661 40.5416 180.141 40.5416C174.741 40.5416 170.861 37.8216 170.541 33.3816L174.901 33.1016C175.341 35.5016 177.181 37.0216 180.101 37.0216C182.021 37.0216 184.421 36.3416 184.421 34.3416C184.381 32.0616 181.701 31.7816 179.421 31.2616C174.901 30.3016 171.061 29.0616 171.061 25.0216C171.061 20.9016 174.421 18.3816 179.701 18.3816C184.301 18.3816 187.821 21.0616 188.501 25.3016L184.141 25.5416Z" fill="black"/>
@@ -50,70 +50,77 @@ export default function Login() {
             <path d="M50.3523 17.5135V35.6312C50.3523 36.6879 51.209 37.5453 52.2664 37.5453C53.3239 37.5453 54.1799 36.6886 54.1799 35.6312V17.5135C54.1799 16.4567 53.3232 15.5993 52.2664 15.5993C51.2097 15.5993 50.3523 16.456 50.3523 17.5135Z" fill="#2100B1"/>
             <path d="M60.4183 31.5479V20.5752C60.4183 19.5185 59.5616 18.6611 58.5041 18.6611C57.4467 18.6611 56.5907 19.5178 56.5907 20.5752V31.5479C56.5907 32.6046 57.4474 33.462 58.5041 33.462C59.5609 33.462 60.4183 32.6053 60.4183 31.5479Z" fill="#2100B1"/>
           </svg>
-          <h1 className="text-3xl font-bold tracking-tight">Sign in</h1>
-          <p className="text-zinc-500">
-            Log in to unlock tailored content and stay connected with your community.
-          </p>
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <label className="text-sm font-medium leading-none">
-              Email
-            </label>
-            <Input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          
-          <div className="space-y-2">
-            <label className="text-sm font-medium leading-none">
-              Password
-            </label>
-            <Input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <h1 className="text-3xl font-bold tracking-tight">Sign in</h1>
+            <p className="text-zinc-500">
+              Log in to unlock tailored content and stay connected with your community.
+            </p>
           </div>
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="keepSignedIn"
-                checked={keepSignedIn}
-                onCheckedChange={(checked) => setKeepSignedIn(checked as boolean)}
-              />
-              <label
-                htmlFor="keepSignedIn"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Keep me signed in
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium leading-none">
+                Email
               </label>
+              <Input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
             </div>
-            <Link to="/forgot-password" className="text-sm text-zinc-500 hover:text-zinc-600">
-              Forgot password?
+            
+            <div className="space-y-2">
+              <label className="text-sm font-medium leading-none">
+                Password
+              </label>
+              <Input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="keepSignedIn"
+                  checked={keepSignedIn}
+                  onCheckedChange={(checked) => setKeepSignedIn(checked as boolean)}
+                />
+                <label
+                  htmlFor="keepSignedIn"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  Keep me signed in
+                </label>
+              </div>
+              <Link to="/forgot-password" className="text-sm text-zinc-500 hover:text-zinc-600">
+                Forgot password?
+              </Link>
+            </div>
+
+            <Button type="submit" className="w-full bg-black text-white hover:bg-black/90">
+              Sign in
+            </Button>
+          </form>
+
+          <div className="text-center text-sm">
+            <span className="text-zinc-500">Don't have an account? </span>
+            <Link to="/register" className="text-black hover:underline font-medium">
+              Sign up
             </Link>
           </div>
-
-          <Button type="submit" className="w-full bg-black text-white hover:bg-black/90">
-            Sign in
-          </Button>
-        </form>
-
-        <div className="text-center text-sm">
-          <span className="text-zinc-500">Don't have an account? </span>
-          <Link to="/register" className="text-black hover:underline font-medium">
-            Sign up
-          </Link>
         </div>
       </div>
+      <div 
+        className="hidden md:block bg-cover bg-center bg-no-repeat" 
+        style={{ 
+          backgroundImage: `url('/lovable-uploads/ceb21d21-7eb3-41f5-8d85-7e755d9d10a5.png')`
+        }}
+      />
     </div>
   );
 }
