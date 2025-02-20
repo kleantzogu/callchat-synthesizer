@@ -123,43 +123,45 @@ const Analytics = () => {
           </div>
 
           <div className="flex-1 p-8">
-            <header className="mb-8">
-              <h1 className="text-3xl font-bold mb-2 animate-fade-down">Analytics</h1>
-              <p className="text-muted-foreground animate-fade-up">Track and analyze your performance metrics</p>
-            </header>
+            <div className="max-w-7xl mx-auto">
+              <header className="mb-8">
+                <h1 className="text-3xl font-bold mb-2 animate-fade-down">Analytics</h1>
+                <p className="text-muted-foreground animate-fade-up">Track and analyze your performance metrics</p>
+              </header>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              {insights.map((insight) => (
-                <Card key={insight.title} className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
-                  <div className="flex items-center justify-between mb-4">
-                    <insight.icon className="w-6 h-6 text-primary" />
-                    <span className={`text-xs font-medium ${
-                      insight.trend.startsWith('+') ? 'text-green-500' : 'text-red-500'
-                    }`}>
-                      {insight.trend}
-                    </span>
-                  </div>
-                  <h3 className="text-sm font-medium text-muted-foreground">{insight.title}</h3>
-                  <p className="text-2xl font-bold mt-1">{insight.value}</p>
-                  <p className="text-sm text-muted-foreground mt-2">{insight.description}</p>
-                </Card>
-              ))}
-            </div>
-
-            <Card className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
-              <h2 className="text-lg font-semibold mb-4">Weekly Performance Trend</h2>
-              <div className="h-[400px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={data}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Line type="monotone" dataKey="value" stroke="#6366f1" strokeWidth={2} />
-                  </LineChart>
-                </ResponsiveContainer>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                {insights.map((insight) => (
+                  <Card key={insight.title} className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
+                    <div className="flex items-center justify-between mb-4">
+                      <insight.icon className="w-6 h-6 text-primary" />
+                      <span className={`text-xs font-medium ${
+                        insight.trend.startsWith('+') ? 'text-green-500' : 'text-red-500'
+                      }`}>
+                        {insight.trend}
+                      </span>
+                    </div>
+                    <h3 className="text-sm font-medium text-muted-foreground">{insight.title}</h3>
+                    <p className="text-2xl font-bold mt-1">{insight.value}</p>
+                    <p className="text-sm text-muted-foreground mt-2">{insight.description}</p>
+                  </Card>
+                ))}
               </div>
-            </Card>
+
+              <Card className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
+                <h2 className="text-lg font-semibold mb-4">Weekly Performance Trend</h2>
+                <div className="h-[400px] w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={data}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="name" />
+                      <YAxis />
+                      <Tooltip />
+                      <Line type="monotone" dataKey="value" stroke="#6366f1" strokeWidth={2} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              </Card>
+            </div>
           </div>
         </main>
       </div>

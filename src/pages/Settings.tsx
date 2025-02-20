@@ -130,53 +130,55 @@ const Settings = () => {
           </div>
 
           <div className="flex-1 p-8">
-            <header className="mb-8">
-              <h1 className="text-3xl font-bold mb-2 animate-fade-down">Settings</h1>
-              <p className="text-muted-foreground animate-fade-up">Manage your account settings and preferences</p>
-            </header>
+            <div className="max-w-7xl mx-auto">
+              <header className="mb-8">
+                <h1 className="text-3xl font-bold mb-2 animate-fade-down">Settings</h1>
+                <p className="text-muted-foreground animate-fade-up">Manage your account settings and preferences</p>
+              </header>
 
-            <div className="space-y-6">
-              {settingSections.map((section) => (
-                <Card key={section.title} className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
-                  <div className="flex items-center gap-3 mb-4">
-                    <section.icon className="w-6 h-6 text-primary" />
-                    <div>
-                      <h2 className="text-lg font-semibold">{section.title}</h2>
-                      <p className="text-sm text-muted-foreground">{section.description}</p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-4">
-                    {section.fields.map((field) => (
-                      <div key={field.label} className="flex items-center justify-between">
-                        <label className="text-sm font-medium">{field.label}</label>
-                        {field.type === "checkbox" ? (
-                          <input
-                            type="checkbox"
-                            className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
-                          />
-                        ) : field.type === "select" ? (
-                          <select className="rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring">
-                            {field.options?.map((option) => (
-                              <option key={option}>{option}</option>
-                            ))}
-                          </select>
-                        ) : (
-                          <input
-                            type={field.type}
-                            placeholder={field.placeholder}
-                            className="rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring"
-                          />
-                        )}
+              <div className="space-y-6">
+                {settingSections.map((section) => (
+                  <Card key={section.title} className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
+                    <div className="flex items-center gap-3 mb-4">
+                      <section.icon className="w-6 h-6 text-primary" />
+                      <div>
+                        <h2 className="text-lg font-semibold">{section.title}</h2>
+                        <p className="text-sm text-muted-foreground">{section.description}</p>
                       </div>
-                    ))}
-                  </div>
-                </Card>
-              ))}
+                    </div>
 
-              <div className="flex justify-end gap-4">
-                <Button variant="outline">Cancel</Button>
-                <Button>Save Changes</Button>
+                    <div className="space-y-4">
+                      {section.fields.map((field) => (
+                        <div key={field.label} className="flex items-center justify-between">
+                          <label className="text-sm font-medium">{field.label}</label>
+                          {field.type === "checkbox" ? (
+                            <input
+                              type="checkbox"
+                              className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                            />
+                          ) : field.type === "select" ? (
+                            <select className="rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring">
+                              {field.options?.map((option) => (
+                                <option key={option}>{option}</option>
+                              ))}
+                            </select>
+                          ) : (
+                            <input
+                              type={field.type}
+                              placeholder={field.placeholder}
+                              className="rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring"
+                            />
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </Card>
+                ))}
+
+                <div className="flex justify-end gap-4">
+                  <Button variant="outline">Cancel</Button>
+                  <Button>Save Changes</Button>
+                </div>
               </div>
             </div>
           </div>
