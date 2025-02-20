@@ -1,5 +1,4 @@
-
-import { Home, MessageSquare, BarChart2, Settings, User, Bell, LogOut, Lock } from "lucide-react";
+import { Home, MessageSquare, BarChart2, Settings, User, Bell, LogOut, Lock, Moon, Sun } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import {
@@ -9,7 +8,9 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import { Toggle } from "@/components/ui/toggle";
 import { toast } from "sonner";
+import { useEffect, useState } from "react";
 
 type MenuItem = {
   title: string;
@@ -67,6 +68,22 @@ export function AppSidebar() {
   const location = useLocation();
   const navigate = useNavigate();
   const currentPath = location.pathname;
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
+    if (savedTheme) {
+      setTheme(savedTheme);
+      document.documentElement.classList.toggle("dark", savedTheme === "dark");
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    document.documentElement.classList.toggle("dark", newTheme === "dark");
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("isAuthenticated");
@@ -76,7 +93,7 @@ export function AppSidebar() {
 
   return (
     <Sidebar>
-      <SidebarContent className="bg-white">
+      <SidebarContent className="bg-white dark:bg-zinc-900">
         <div className="flex flex-row items-center justify-between p-4 mb-0">
           <svg width="150" height="34" viewBox="0 0 228 52" fill="none" xmlns="http://www.w3.org/2000/svg" className="mb-2">
             <path d="M217.574 14.0616H221.814V18.8616H227.414V22.3016H221.814V33.9816C221.814 35.7016 222.654 36.5816 224.294 36.5816H227.374V40.0616H223.854C219.774 40.0616 217.574 37.9416 217.574 33.9816V22.3016H214.334V18.8616H217.574V14.0616Z" fill="black" />
@@ -138,7 +155,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <Link 
                       to={item.url} 
-                      className={`flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md ${item.url === currentPath ? "bg-[#F1F1F1] text-zinc-900" : ""}`}
+                      className={`flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 dark:text-zinc-400 hover:text-primary hover:bg-zinc-100 dark:hover:bg-zinc-800 py-3 px-2 rounded-md ${item.url === currentPath ? "bg-[#F1F1F1] dark:bg-zinc-800 text-zinc-900 dark:text-white" : ""}`}
                     >
                       {item.icon && <item.icon className="w-5 h-5" />}
                       <span>{item.title}</span>
@@ -154,12 +171,31 @@ export function AppSidebar() {
           <SidebarGroup>
             <SidebarGroupContent>
               <SidebarMenu>
+                <SidebarMenuItem>
+                  <Toggle
+                    pressed={theme === "dark"}
+                    onPressedChange={toggleTheme}
+                    className="flex w-full items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 dark:text-zinc-400 hover:text-primary hover:bg-zinc-100 dark:hover:bg-zinc-800 py-3 px-2 rounded-md"
+                  >
+                    {theme === "dark" ? (
+                      <>
+                        <Moon className="w-5 h-5" />
+                        <span>Dark Mode</span>
+                      </>
+                    ) : (
+                      <>
+                        <Sun className="w-5 h-5" />
+                        <span>Light Mode</span>
+                      </>
+                    )}
+                  </Toggle>
+                </SidebarMenuItem>
                 {settingsMenuItems.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild>
                       <Link 
                         to={item.url} 
-                        className={`flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md ${item.url === currentPath ? "bg-[#F1F1F1] text-zinc-900" : ""}`}
+                        className={`flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 dark:text-zinc-400 hover:text-primary hover:bg-zinc-100 dark:hover:bg-zinc-800 py-3 px-2 rounded-md ${item.url === currentPath ? "bg-[#F1F1F1] dark:bg-zinc-800 text-zinc-900 dark:text-white" : ""}`}
                       >
                         <item.icon className="w-5 h-5" />
                         <span>{item.title}</span>
@@ -170,7 +206,7 @@ export function AppSidebar() {
                 <SidebarMenuItem>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <button className="flex w-full items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md">
+                      <button className="flex w-full items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 dark:text-zinc-400 hover:text-primary hover:bg-zinc-100 dark:hover:bg-zinc-800 py-3 px-2 rounded-md">
                         <User className="w-5 h-5" />
                         <span>Account</span>
                       </button>
