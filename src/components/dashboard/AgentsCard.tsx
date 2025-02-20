@@ -73,7 +73,7 @@ const agents: Agent[] = [
 
 export function AgentsCard() {
   return (
-    <Card className="col-span-full lg:col-span-2 p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
+    <Card className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-lg font-semibold">Top Performing Agents</h2>
         <a href="/agents" className="text-sm text-primary hover:underline">
