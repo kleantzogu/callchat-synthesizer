@@ -105,9 +105,9 @@ const Settings = () => {
         return (
           <Toggle
             aria-label={field.label}
-            className="bg-zinc-200 hover:bg-zinc-300 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground w-[42px] h-[24px] rounded-full relative px-0.5 transition-colors"
+            className="bg-zinc-200 hover:bg-zinc-300 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground w-[42px] h-[24px] rounded-full relative px-0.5 transition-all duration-200"
           >
-            <div className="w-[18px] h-[18px] bg-white rounded-full absolute top-[3px] left-[3px] transition-transform data-[state=on]:translate-x-[18px]" />
+            <div className="w-[18px] h-[18px] bg-white rounded-full absolute top-[3px] left-[3px] transition-all duration-200 transform data-[state=on]:translate-x-[18px]" />
           </Toggle>
         );
       case "select":
