@@ -94,6 +94,6 @@ export default function Login() {
       </div>
       <div style={{
       backgroundImage: `url('/lovable-uploads/ceb21d21-7eb3-41f5-8d85-7e755d9d10a5.png')`
-    }} className="hidden md:block bg-cover bg-center bg-no-repeat bg-purple-200 hover:bg-purple-100" />
+    }} className="hidden md:block bg-cover bg-center bg-no-repeat bg-violet-100" />
     </div>;
 }
