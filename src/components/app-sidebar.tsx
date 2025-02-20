@@ -1,5 +1,5 @@
-
-import { Home, MessageSquare, BarChart2, Settings, User, Bell } from "lucide-react";
+<lov-code>
+import { Home, MessageSquare, BarChart2, Settings, User, Bell, LogOut, Lock } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 import { useLocation, Link } from "react-router-dom";
 import {
@@ -7,6 +7,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 
 type MenuItem = {
@@ -53,22 +54,22 @@ const mainMenuItems: MenuItem[] = [{
   url: "/analytics"
 }];
 
-const settingsMenuItems: MenuItem[] = [
+const settingsMenuItems = [
   {
     title: "Settings",
     icon: Settings,
     url: "/settings"
-  },
-  {
-    title: "Profile",
-    icon: User,
-    url: "/profile"
   }
 ];
 
 export function AppSidebar() {
   const location = useLocation();
   const currentPath = location.pathname;
+
+  const handleLogout = () => {
+    console.log("Logout clicked");
+    // Add logout logic here
+  };
 
   return <Sidebar>
       <SidebarContent className="bg-white">
@@ -162,10 +163,7 @@ export function AppSidebar() {
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        </div>
-      </SidebarContent>
-    </Sidebar>;
-}
+                <SidebarMenuItem>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button className="flex w-full items-center
