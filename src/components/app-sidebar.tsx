@@ -74,7 +74,7 @@ export function AppSidebar() {
     navigate("/login");
   };
 
-  const linkClasses = `flex w-full items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 h-10 px-3 rounded-md`;
+  const linkClasses = `flex w-full h-full items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 px-3 rounded-md`;
   const menuItemClasses = "h-10";
 
   return (
@@ -138,7 +138,7 @@ export function AppSidebar() {
             <SidebarMenu>
               {mainMenuItems.map((item) => (
                 <SidebarMenuItem key={item.title} className={menuItemClasses}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild className="h-full">
                     <Link 
                       to={item.url} 
                       className={`${linkClasses} ${item.url === currentPath ? "bg-[#F1F1F1] text-zinc-900" : ""}`}
@@ -159,7 +159,7 @@ export function AppSidebar() {
               <SidebarMenu>
                 {settingsMenuItems.map((item) => (
                   <SidebarMenuItem key={item.title} className={menuItemClasses}>
-                    <SidebarMenuButton asChild>
+                    <SidebarMenuButton asChild className="h-full">
                       <Link 
                         to={item.url} 
                         className={`${linkClasses} ${item.url === currentPath ? "bg-[#F1F1F1] text-zinc-900" : ""}`}
