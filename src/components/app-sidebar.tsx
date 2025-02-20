@@ -59,7 +59,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <a 
                       href={item.url} 
-                      className={`flex items-center gap-2 font-medium transition-colors duration-200 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md ${item.url === "/" ? "bg-zinc-100" : ""}`}
+                      className={`flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md ${item.url === "/" ? "bg-zinc-100" : ""}`}
                     >
                       {item.icon && <item.icon className="w-5 h-5" />}
                       <span>{item.title}</span>
@@ -78,7 +78,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <a 
                       href={settingsMenuItem.url} 
-                      className="flex items-center gap-2 font-medium transition-colors duration-200 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md"
+                      className="flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md"
                     >
                       <settingsMenuItem.icon className="w-5 h-5" />
                       <span>{settingsMenuItem.title}</span>
