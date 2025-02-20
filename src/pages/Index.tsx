@@ -1,3 +1,4 @@
+
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { BarChart2, Clock, Heart, ThumbsUp, UserCheck } from "lucide-react";
@@ -41,7 +42,7 @@ const Index = () => {
             </header>
 
             <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              {kpis.map(kpi => <Card key={kpi.title} className="p-6 glass card-hover animate-fade-up 1px rounded-xl bg-white">
+              {kpis.map(kpi => <Card key={kpi.title} className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
                   <div className="flex items-center justify-between mb-4">
                     {kpi.icon && <kpi.icon className="w-6 h-6 text-primary" />}
                     <span className="text-xs font-medium text-green-500">{kpi.trend}</span>
@@ -52,7 +53,7 @@ const Index = () => {
             </section>
 
             <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card className="p-6 glass card-hover animate-fade-up bg-white">
+              <Card className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-semibold">Recent Transcripts</h2>
                   <a href="/transcripts" className="text-sm text-primary hover:underline">
@@ -70,7 +71,7 @@ const Index = () => {
                 </div>
               </Card>
 
-              <Card className="p-6 glass card-hover animate-fade-up bg-white">
+              <Card className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-semibold">Analytics Overview</h2>
                   <a href="/analytics" className="text-sm text-primary hover:underline">
