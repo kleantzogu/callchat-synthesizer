@@ -19,136 +19,33 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useState } from "react";
 
-const transcripts = [
-  {
-    id: 1,
-    date: "2024-03-10",
-    duration: "15:23",
-    topic: "Product Inquiry",
-    sentiment: "Positive",
-    status: "Completed",
-    audio: "https://example.com/audio1.mp3",
-    transcription: "Customer: Hi, I'm having trouble with the checkout process.\n\nAgent: I'll be happy to help you with that. Could you describe what specific issue you're experiencing?\n\nCustomer: When I click on 'Complete Purchase,' nothing happens.\n\nAgent: Let me check that for you. Could you tell me which browser you're using?",
+const transcripts = Array.from({ length: 55 }, (_, index) => {
+  const id = index + 1;
+  const sentiments = ["Positive", "Neutral", "Bad", "Very Bad"];
+  const topics = ["Product Inquiry", "Technical Support", "Billing Question"];
+  const statuses = ["Completed", "In Review"];
+  
+  return {
+    id,
+    date: "2024-03-" + String(Math.floor(Math.random() * 30) + 1).padStart(2, '0'),
+    duration: `${Math.floor(Math.random() * 30) + 1}:${String(Math.floor(Math.random() * 60)).padStart(2, '0')}`,
+    topic: topics[Math.floor(Math.random() * topics.length)],
+    sentiment: sentiments[Math.floor(Math.random() * sentiments.length)],
+    status: statuses[Math.floor(Math.random() * statuses.length)],
+    audio: `https://example.com/audio${id}.mp3`,
+    transcription: "Customer: Sample conversation #" + id + "\n\nAgent: Sample response #" + id,
     metrics: {
-      sentiment: "positive",
-      customerSatisfaction: 85,
+      sentiment: sentiments[Math.floor(Math.random() * sentiments.length)].toLowerCase().replace(' ', '-'),
+      customerSatisfaction: Math.floor(Math.random() * 60) + 40,
       speakingRatio: {
-        agent: 60,
-        customer: 40
+        agent: Math.floor(Math.random() * 30) + 50,
+        customer: Math.floor(Math.random() * 30) + 20
       },
-      tone: ["professional", "helpful", "concerned"],
-      wordCount: 45
+      tone: ["professional", "helpful"],
+      wordCount: Math.floor(Math.random() * 100) + 20
     }
-  },
-  {
-    id: 2,
-    date: "2024-03-10",
-    duration: "08:45",
-    topic: "Technical Support",
-    sentiment: "Neutral",
-    status: "In Review",
-    audio: "https://example.com/audio2.mp3",
-    transcription: "Customer: I'd like to know more about the premium features.\n\nAgent: I'll be glad to explain our premium features. Our premium plan includes advanced analytics, priority support, and custom integrations.",
-    metrics: {
-      sentiment: "neutral",
-      customerSatisfaction: 75,
-      speakingRatio: {
-        agent: 70,
-        customer: 30
-      },
-      tone: ["informative", "professional"],
-      wordCount: 32
-    }
-  },
-  {
-    id: 3,
-    date: "2024-03-09",
-    duration: "12:10",
-    topic: "Billing Question",
-    sentiment: "Neutral",
-    status: "Completed",
-    audio: "https://example.com/audio3.mp3",
-    transcription: "Customer: How do I reset my password?\n\nAgent: I can help you with that. First, click on the 'Forgot Password' link on the login page. You'll receive an email with instructions.",
-    metrics: {
-      sentiment: "neutral",
-      customerSatisfaction: 90,
-      speakingRatio: {
-        agent: 65,
-        customer: 35
-      },
-      tone: ["helpful", "clear"],
-      wordCount: 28
-    }
-  },
-  {
-    id: 4,
-    date: "2024-03-09",
-    duration: "18:45",
-    topic: "Product Inquiry",
-    sentiment: "Positive",
-    status: "Completed",
-    audio: "https://example.com/audio4.mp3",
-    transcription: "Customer: I want to upgrade my subscription.\n\nAgent: I'll help you with the upgrade process. Let me explain the available options.",
-    metrics: {
-      sentiment: "positive",
-      customerSatisfaction: 95,
-      speakingRatio: { agent: 55, customer: 45 },
-      tone: ["helpful", "informative"],
-      wordCount: 22
-    }
-  },
-  {
-    id: 5,
-    date: "2024-03-09",
-    duration: "09:30",
-    topic: "Technical Support",
-    sentiment: "Bad",
-    status: "Completed",
-    audio: "https://example.com/audio5.mp3",
-    transcription: "Customer: My app keeps crashing.\n\nAgent: Let's troubleshoot this together. When did you first notice the issue?",
-    metrics: {
-      sentiment: "bad",
-      customerSatisfaction: 60,
-      speakingRatio: { agent: 60, customer: 40 },
-      tone: ["professional", "technical"],
-      wordCount: 18
-    }
-  },
-  {
-    id: 6,
-    date: "2024-03-08",
-    duration: "14:20",
-    topic: "Billing Question",
-    sentiment: "Very Bad",
-    status: "In Review",
-    audio: "https://example.com/audio6.mp3",
-    transcription: "Customer: I was charged twice!\n\nAgent: I apologize for the inconvenience. Let me check your billing history right away.",
-    metrics: {
-      sentiment: "very-bad",
-      customerSatisfaction: 40,
-      speakingRatio: { agent: 70, customer: 30 },
-      tone: ["apologetic", "concerned"],
-      wordCount: 16
-    }
-  },
-  {
-    id: 7,
-    date: "2024-03-08",
-    duration: "11:15",
-    topic: "Product Inquiry",
-    sentiment: "Neutral",
-    status: "Completed",
-    audio: "https://example.com/audio7.mp3",
-    transcription: "Customer: What's the difference between basic and premium?\n\nAgent: Let me outline the key differences in features and pricing.",
-    metrics: {
-      sentiment: "neutral",
-      customerSatisfaction: 80,
-      speakingRatio: { agent: 65, customer: 35 },
-      tone: ["informative", "clear"],
-      wordCount: 20
-    }
-  }
-];
+  };
+});
 
 const notifications = [
   {
@@ -174,7 +71,7 @@ const notifications = [
   }
 ];
 
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 10;
 
 const Transcripts = () => {
   const [selectedTranscript, setSelectedTranscript] = useState<typeof transcripts[0] | null>(null);
