@@ -9,7 +9,6 @@ import Notifications from "./pages/Notifications";
 import ChangePassword from "./pages/ChangePassword";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import { ThemeProvider } from "./hooks/use-theme";
 
 // Protected Route wrapper component
 const ProtectedRoute = () => {
@@ -73,9 +72,5 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
-  return (
-    <ThemeProvider defaultTheme="light">
-      <RouterProvider router={router} />
-    </ThemeProvider>
-  );
+  return <RouterProvider router={router} />;
 }

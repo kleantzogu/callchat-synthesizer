@@ -9,7 +9,6 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
-import { ThemeToggle } from "@/components/theme-toggle";
 
 type MenuItem = {
   title: string;
@@ -76,7 +75,7 @@ export function AppSidebar() {
 
   return (
     <Sidebar>
-      <SidebarContent className="bg-white dark:bg-zinc-900">
+      <SidebarContent className="bg-white">
         <div className="flex flex-row items-center justify-between p-4 mb-0">
           <svg width="150" height="34" viewBox="0 0 228 52" fill="none" xmlns="http://www.w3.org/2000/svg" className="mb-2">
             <path d="M217.574 14.0616H221.814V18.8616H227.414V22.3016H221.814V33.9816C221.814 35.7016 222.654 36.5816 224.294 36.5816H227.374V40.0616H223.854C219.774 40.0616 217.574 37.9416 217.574 33.9816V22.3016H214.334V18.8616H217.574V14.0616Z" fill="black" />
@@ -138,7 +137,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <Link 
                       to={item.url} 
-                      className={`flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 dark:text-zinc-400 hover:text-primary hover:bg-zinc-100 dark:hover:bg-zinc-800 py-3 px-2 rounded-md ${item.url === currentPath ? "bg-[#F1F1F1] dark:bg-zinc-800 text-zinc-900 dark:text-white" : ""}`}
+                      className={`flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md ${item.url === currentPath ? "bg-[#F1F1F1] text-zinc-900" : ""}`}
                     >
                       {item.icon && <item.icon className="w-5 h-5" />}
                       <span>{item.title}</span>
@@ -154,15 +153,12 @@ export function AppSidebar() {
           <SidebarGroup>
             <SidebarGroupContent>
               <SidebarMenu>
-                <SidebarMenuItem>
-                  <ThemeToggle />
-                </SidebarMenuItem>
                 {settingsMenuItems.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild>
                       <Link 
                         to={item.url} 
-                        className={`flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 dark:text-zinc-400 hover:text-primary hover:bg-zinc-100 dark:hover:bg-zinc-800 py-3 px-2 rounded-md ${item.url === currentPath ? "bg-[#F1F1F1] dark:bg-zinc-800 text-zinc-900 dark:text-white" : ""}`}
+                        className={`flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md ${item.url === currentPath ? "bg-[#F1F1F1] text-zinc-900" : ""}`}
                       >
                         <item.icon className="w-5 h-5" />
                         <span>{item.title}</span>
@@ -173,7 +169,7 @@ export function AppSidebar() {
                 <SidebarMenuItem>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <button className="flex w-full items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 dark:text-zinc-400 hover:text-primary hover:bg-zinc-100 dark:hover:bg-zinc-800 py-3 px-2 rounded-md">
+                      <button className="flex w-full items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md">
                         <User className="w-5 h-5" />
                         <span>Account</span>
                       </button>
