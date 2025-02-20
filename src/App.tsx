@@ -28,7 +28,37 @@ const ProtectedRoute = () => {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Navigate to="/login" replace />,
+    element: <ProtectedRoute />,
+    children: [
+      {
+        index: true,
+        element: <Navigate to="/dashboard" replace />,
+      },
+      {
+        path: "dashboard",
+        element: <Index />,
+      },
+      {
+        path: "analytics",
+        element: <Analytics />,
+      },
+      {
+        path: "settings",
+        element: <Settings />,
+      },
+      {
+        path: "transcripts",
+        element: <Transcripts />,
+      },
+      {
+        path: "notifications",
+        element: <Notifications />,
+      },
+      {
+        path: "change-password",
+        element: <ChangePassword />,
+      },
+    ],
   },
   {
     path: "/login",
@@ -37,35 +67,6 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
-  },
-  {
-    element: <ProtectedRoute />,
-    children: [
-      {
-        path: "/dashboard",
-        element: <Index />,
-      },
-      {
-        path: "/analytics",
-        element: <Analytics />,
-      },
-      {
-        path: "/settings",
-        element: <Settings />,
-      },
-      {
-        path: "/transcripts",
-        element: <Transcripts />,
-      },
-      {
-        path: "/notifications",
-        element: <Notifications />,
-      },
-      {
-        path: "/change-password",
-        element: <ChangePassword />,
-      },
-    ],
   },
   {
     path: "*",
