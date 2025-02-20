@@ -37,6 +37,25 @@
   }
 }
 
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+  .container, 
+  main, 
+  section, 
+  .content-wrapper {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* Add iOS-style safe area padding for notches */
+  @supports (padding: max(0px)) {
+    .fixed.bottom-0 {
+      padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+      background-color: hsl(var(--background));
+    }
+  }
+}
+
 .glass {
   @apply bg-white/20 backdrop-blur-lg border border-white/30;
 }
