@@ -138,7 +138,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <Link 
                       to={item.url} 
-                      className={`flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 py-4 px-3 rounded-md ${item.url === currentPath ? "bg-[#F1F1F1] text-zinc-900" : ""}`}
+                      className={`flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 h-12 px-3 rounded-md ${item.url === currentPath ? "bg-[#F1F1F1] text-zinc-900" : ""}`}
                     >
                       {item.icon && <item.icon className="w-5 h-5" />}
                       <span>{item.title}</span>
@@ -159,7 +159,7 @@ export function AppSidebar() {
                     <SidebarMenuButton asChild>
                       <Link 
                         to={item.url} 
-                        className={`flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 py-4 px-3 rounded-md ${item.url === currentPath ? "bg-[#F1F1F1] text-zinc-900" : ""}`}
+                        className={`flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 h-12 px-3 rounded-md ${item.url === currentPath ? "bg-[#F1F1F1] text-zinc-900" : ""}`}
                       >
                         <item.icon className="w-5 h-5" />
                         <span>{item.title}</span>
@@ -170,7 +170,7 @@ export function AppSidebar() {
                 <SidebarMenuItem>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <button className="flex w-full items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 py-4 px-3 rounded-md">
+                      <button className="flex w-full items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 h-12 px-3 rounded-md">
                         <User className="w-5 h-5" />
                         <span>Account</span>
                       </button>
