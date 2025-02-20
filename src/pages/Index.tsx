@@ -157,6 +157,10 @@ const Index = () => {
     }
   };
 
+  const capitalizeFirstLetter = (string: string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
   return <SidebarProvider>
       <div className="min-h-screen flex w-full">
         <AppSidebar />
@@ -250,7 +254,7 @@ const Index = () => {
                         <div className="flex items-center justify-between mb-2">
                           <span className="text-sm font-medium">Call #{transcript.id}</span>
                           <Badge variant="secondary" className={getSentimentStyles(transcript.metrics.sentiment)}>
-                            {transcript.metrics.sentiment.replace('-', ' ')}
+                            {capitalizeFirstLetter(transcript.metrics.sentiment)}
                           </Badge>
                         </div>
                         <p className="text-sm text-muted-foreground">{transcript.transcription.slice(0, 100)}...</p>
@@ -295,7 +299,7 @@ const Index = () => {
                       <div className="flex flex-col items-center p-3 bg-secondary/30 rounded-lg">
                         <Volume2 className="w-5 h-5 mb-1 text-primary" />
                         <Badge variant="secondary" className={selectedTranscript?.metrics.sentiment && getSentimentStyles(selectedTranscript.metrics.sentiment)}>
-                          {selectedTranscript?.metrics.sentiment}
+                          {selectedTranscript?.metrics.sentiment && capitalizeFirstLetter(selectedTranscript.metrics.sentiment)}
                         </Badge>
                         <span className="text-xs text-muted-foreground">Sentiment</span>
                       </div>
