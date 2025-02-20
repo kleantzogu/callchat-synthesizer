@@ -222,9 +222,9 @@ const Settings = () => {
                       </div>
                     </div>
 
-                    <div className="space-y-3 sm:space-y-4">
+                    <div className="space-y-0">
                       {section.fields.map((field) => (
-                        <div key={field.label} className="flex items-center justify-between">
+                        <div key={field.label} className="flex items-center justify-between h-[40px] border-b last:border-b-0 border-gray-100">
                           <label className="text-sm font-medium">{field.label}</label>
                           {renderField(field)}
                         </div>
