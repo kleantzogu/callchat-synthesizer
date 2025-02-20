@@ -1,5 +1,5 @@
 
-import { Users, ArrowUpRight, MessageSquare, Clock } from "lucide-react";
+import { Clock, ThumbsUp, Award, CheckCircle } from "lucide-react";
 import { MetricCard } from "../analytics/MetricCard";
 import { generateMetricData } from "@/utils/analyticsData";
 
@@ -10,39 +10,39 @@ interface KPISectionProps {
 export function KPISection({ timeFilter }: KPISectionProps) {
   const metrics = [
     {
-      title: "Active Users",
-      value: "2,420",
-      trend: "+5.23%",
-      icon: Users,
-      color: "#3b82f6",
-      data: generateMetricData(timeFilter, 2420, 200),
-      format: (value: number) => value.toLocaleString()
-    },
-    {
-      title: "Messages Sent",
-      value: "1,210",
-      trend: "+10.15%",
-      icon: MessageSquare,
-      color: "#16a34a",
-      data: generateMetricData(timeFilter, 1210, 100),
-      format: (value: number) => value.toLocaleString()
-    },
-    {
-      title: "Avg. Response Time",
+      title: "Response Time",
       value: "2.5m",
       trend: "-12.40%",
       icon: Clock,
-      color: "#dc2626",
+      color: "#3b82f6",
       data: generateMetricData(timeFilter, 2.5, 0.5),
       format: (value: number) => `${value.toFixed(1)}m`
     },
     {
-      title: "Conversion Rate",
-      value: "12.5%",
-      trend: "+2.35%",
-      icon: ArrowUpRight,
+      title: "Satisfaction",
+      value: "92%",
+      trend: "+5.23%",
+      icon: ThumbsUp,
+      color: "#16a34a",
+      data: generateMetricData(timeFilter, 92, 5),
+      format: (value: number) => `${value.toFixed(1)}%`
+    },
+    {
+      title: "Service Quality",
+      value: "4.8",
+      trend: "+3.15%",
+      icon: Award,
       color: "#9333ea",
-      data: generateMetricData(timeFilter, 12.5, 2),
+      data: generateMetricData(timeFilter, 4.8, 0.3),
+      format: (value: number) => value.toFixed(1)
+    },
+    {
+      title: "Resolution Rate",
+      value: "95%",
+      trend: "+2.35%",
+      icon: CheckCircle,
+      color: "#dc2626",
+      data: generateMetricData(timeFilter, 95, 3),
       format: (value: number) => `${value.toFixed(1)}%`
     }
   ];
