@@ -4,12 +4,6 @@ import { Clock, ThumbsUp, AlertTriangle, Bell, User, Timer, SmileIcon, Award, Ch
 import { Card } from "@/components/ui/card";
 import { Area, AreaChart, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
   Select,
   SelectContent,
   SelectItem,
@@ -166,64 +160,19 @@ const Analytics = () => {
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
         <AppSidebar />
-        <main className="flex-1 flex flex-col bg-zinc-100">
-          <div className="w-full bg-white border-b">
-            <div className="flex items-center justify-between h-16 px-8">
-              <h2 className="text-xl font-semibold">Analytics</h2>
-              <div className="flex items-center gap-4">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <button className="relative p-2 hover:bg-gray-100 rounded-full transition-colors">
-                      <Bell className="w-5 h-5" />
-                      <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
-                    </button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-80">
-                    {notifications.map((notification) => (
-                      <DropdownMenuItem key={notification.id} className="flex flex-col items-start p-3 space-y-1 cursor-pointer">
-                        <div className="flex items-center justify-between w-full">
-                          <span className="font-medium">{notification.title}</span>
-                          <span className="text-xs text-muted-foreground">{notification.time}</span>
-                        </div>
-                        <p className="text-sm text-muted-foreground">{notification.description}</p>
-                        {notification.unread && (
-                          <div className="flex items-center gap-1 text-xs text-blue-500">
-                            <div className="w-1 h-1 rounded-full bg-blue-500" />
-                            New
-                          </div>
-                        )}
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-                      <User className="w-5 h-5" />
-                    </button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem className="cursor-pointer">
-                      Account Settings
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer text-red-600">
-                      Logout
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex-1 p-8">
+        <main className="flex-1 flex flex-col bg-zinc-100 min-h-screen overflow-x-hidden">
+          <div className="flex-1 px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
             <div className="max-w-7xl mx-auto">
-              <header className="mb-8 flex items-center justify-between">
+              <header className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
-                  <h1 className="text-3xl font-bold mb-2 animate-fade-down">Analytics</h1>
-                  <p className="text-muted-foreground animate-fade-up">Track and analyze your performance metrics</p>
+                  <h1 className="text-2xl sm:text-3xl font-bold mb-1 sm:mb-2 animate-fade-down">Analytics</h1>
+                  <p className="text-sm sm:text-base text-muted-foreground animate-fade-up">Track and analyze your performance metrics</p>
                 </div>
-                <Select defaultValue="7days" onValueChange={setTimeFrame}>
-                  <SelectTrigger className="w-[180px]">
+                <Select 
+                  defaultValue="7days" 
+                  onValueChange={setTimeFrame}
+                >
+                  <SelectTrigger className="w-full sm:w-[180px]">
                     <SelectValue placeholder="Select time period" />
                   </SelectTrigger>
                   <SelectContent>
@@ -236,13 +185,13 @@ const Analytics = () => {
                 </Select>
               </header>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
                 {metricCards.map((metric) => (
-                  <Card key={metric.title} className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
-                    <div className="flex items-center justify-between mb-4">
+                  <Card key={metric.title} className="p-4 sm:p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
+                    <div className="flex items-center justify-between mb-3 sm:mb-4">
                       <div className="flex items-center gap-2">
-                        <metric.icon className="w-5 h-5" style={{ color: metric.color }} />
-                        <h3 className="font-medium">{metric.title}</h3>
+                        <metric.icon className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: metric.color }} />
+                        <h3 className="text-sm sm:text-base font-medium">{metric.title}</h3>
                       </div>
                       <span className={`text-xs font-medium ${
                         metric.trend.startsWith('+') ? 'text-green-500' : 'text-red-500'
@@ -250,8 +199,8 @@ const Analytics = () => {
                         {metric.trend}
                       </span>
                     </div>
-                    <p className="text-2xl font-bold mb-4">{metric.value}</p>
-                    <div className="h-[100px] w-full">
+                    <p className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">{metric.value}</p>
+                    <div className="h-[80px] sm:h-[100px] w-full">
                       <ResponsiveContainer width="100%" height="100%">
                         <AreaChart data={metric.data}>
                           <defs>
@@ -264,8 +213,8 @@ const Analytics = () => {
                             content={({ active, payload }) => {
                               if (active && payload && payload.length) {
                                 return (
-                                  <div className="bg-white p-2 rounded-lg shadow-lg border">
-                                    <p className="font-medium text-sm">
+                                  <div className="bg-white p-2 rounded-lg shadow-lg border text-xs sm:text-sm">
+                                    <p className="font-medium">
                                       {metric.format(payload[0].value as number)}
                                     </p>
                                   </div>
@@ -288,9 +237,9 @@ const Analytics = () => {
                 ))}
               </div>
 
-              <Card className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
-                <h2 className="text-lg font-semibold mb-4">Weekly Performance Trend</h2>
-                <div className="h-[400px] w-full">
+              <Card className="p-4 sm:p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
+                <h2 className="text-base sm:text-lg font-semibold mb-4">Weekly Performance Trend</h2>
+                <div className="h-[300px] sm:h-[400px] w-full">
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={generateTimeData(timeFrame)}>
                       <defs>
@@ -303,19 +252,22 @@ const Analytics = () => {
                         dataKey="name" 
                         axisLine={false}
                         tickLine={false}
-                        tick={{ fill: '#666', fontSize: 12 }}
+                        tick={{ fill: '#666', fontSize: 10, dy: 10 }}
+                        interval="preserveStartEnd"
                       />
                       <YAxis 
                         axisLine={false}
                         tickLine={false}
-                        tick={{ fill: '#666', fontSize: 12 }}
+                        tick={{ fill: '#666', fontSize: 10 }}
+                        width={35}
                       />
                       <Tooltip
                         contentStyle={{
                           backgroundColor: '#fff',
                           border: 'none',
                           borderRadius: '8px',
-                          boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                          fontSize: '12px'
                         }}
                       />
                       <Area
