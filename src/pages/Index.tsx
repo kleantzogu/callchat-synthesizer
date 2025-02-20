@@ -1,4 +1,3 @@
-
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { BarChart2, Clock, Heart, PlayCircle, ThumbsUp, UserCheck, Timer, Volume2, MessageCircle, TrendingUp } from "lucide-react";
@@ -195,7 +194,7 @@ const Index = () => {
                   </DialogTitle>
                 </DialogHeader>
                 <div className="space-y-4">
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                  <div className="grid grid-cols-2 gap-4 mb-4">
                     <div className="flex flex-col items-center p-3 bg-secondary/30 rounded-lg">
                       <Timer className="w-5 h-5 mb-1 text-primary" />
                       <span className="text-sm font-medium">{selectedTranscript?.duration}</span>
@@ -221,7 +220,7 @@ const Index = () => {
                       <span className="text-xs text-muted-foreground">Sentiment</span>
                     </div>
                   </div>
-                  
+
                   <div className="bg-secondary/30 p-3 rounded-lg">
                     <h4 className="text-sm font-medium mb-2">Conversation Tone</h4>
                     <div className="flex flex-wrap gap-2">
