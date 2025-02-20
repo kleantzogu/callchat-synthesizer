@@ -1,7 +1,7 @@
 
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
-import { Timer, SmileIcon, Award, CheckCircle } from "lucide-react";
+import { Timer, SmileIcon, Award, CheckCircle, Bell, User } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -9,13 +9,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useState } from "react";
 import { MetricCard } from "@/components/analytics/MetricCard";
 import { PerformanceChart } from "@/components/analytics/PerformanceChart";
 import { generateTimeData, generateMetricData } from "@/utils/analyticsData";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Analytics = () => {
   const [timeFrame, setTimeFrame] = useState('7days');
+  const isMobile = useIsMobile();
 
   const metricCards = [
     {
@@ -59,8 +67,46 @@ const Analytics = () => {
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
-        <AppSidebar />
+        {!isMobile && <AppSidebar />}
         <main className="flex-1 flex flex-col bg-zinc-100 min-h-screen overflow-x-hidden">
+          <div className="w-full bg-white border-b">
+            <div className="flex items-center justify-between h-16 px-4 sm:px-8">
+              <h2 className="text-xl font-semibold">Analytics</h2>
+              {!isMobile && (
+                <div className="flex items-center gap-4">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button className="relative p-2 hover:bg-gray-100 rounded-full transition-colors">
+                        <Bell className="w-5 h-5" />
+                        <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+                      </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-80">
+                      <DropdownMenuItem>
+                        <span>No new notifications</span>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                        <User className="w-5 h-5" />
+                      </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem className="cursor-pointer">
+                        Account Settings
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="cursor-pointer text-red-600">
+                        Logout
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+              )}
+            </div>
+          </div>
+
           <div className="flex-1 px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
             <div className="max-w-7xl mx-auto">
               <header className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">

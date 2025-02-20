@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useState } from "react";
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 type KPI = {
   title: string;
@@ -172,6 +173,7 @@ const Index = () => {
   const [selectedTranscript, setSelectedTranscript] = useState<Transcript | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [timeFilter, setTimeFilter] = useState("30days");
+  const isMobile = useIsMobile();
 
   const getSentimentStyles = (sentiment: 'positive' | 'neutral' | 'negative') => {
     switch (sentiment) {
@@ -191,12 +193,13 @@ const Index = () => {
   };
 
   return <SidebarProvider>
-      <div className="min-h-screen flex w-full">
-        <AppSidebar />
-        <main className="flex-1 flex flex-col bg-zinc-100">
-          <div className="w-full bg-white border-b">
-            <div className="flex items-center justify-between h-16 px-8">
-              <h2 className="text-xl font-semibold">Dashboard</h2>
+    <div className="min-h-screen flex w-full">
+      {!isMobile && <AppSidebar />}
+      <main className="flex-1 flex flex-col bg-zinc-100">
+        <div className="w-full bg-white border-b">
+          <div className="flex items-center justify-between h-16 px-4 sm:px-8">
+            <h2 className="text-xl font-semibold">Dashboard</h2>
+            {!isMobile && (
               <div className="flex items-center gap-4">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -239,191 +242,192 @@ const Index = () => {
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
-            </div>
+            )}
           </div>
+        </div>
 
-          <div className="flex-1 p-8">
-            <div className="max-w-7xl mx-auto">
-              <header className="mb-8">
-                <div className="flex items-center justify-between mb-2">
-                  <h1 className="text-3xl font-bold animate-fade-down">Welcome to Kleant</h1>
-                  <Select value={timeFilter} onValueChange={setTimeFilter}>
-                    <SelectTrigger className="w-[180px]">
-                      <SelectValue placeholder="Select time range" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {timeFilters.map((filter) => (
-                        <SelectItem key={filter.value} value={filter.value}>
-                          {filter.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <p className="text-muted-foreground animate-fade-up">Monitor and analyze your customer interactions in real-time</p>
-              </header>
-
-              <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                {kpis.map(kpi => <Card key={kpi.title} className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
-                    <div className="flex items-center justify-between mb-4">
-                      {kpi.icon && <kpi.icon className="w-6 h-6 text-primary" />}
-                      <Badge variant="secondary" className={`${kpi.trend.startsWith('+') ? 'bg-green-100 text-green-800 hover:bg-green-100' : 'bg-red-100 text-red-800 hover:bg-red-100'}`}>
-                        {kpi.trend}
-                      </Badge>
-                    </div>
-                    <h3 className="text-sm font-medium text-muted-foreground">{kpi.title}</h3>
-                    <p className="text-2xl font-bold mt-1">{kpi.value}</p>
-                  </Card>)}
-              </section>
-
-              <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <Card className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
-                  <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-lg font-semibold">Recent Transcripts</h2>
-                    <a href="/transcripts" className="text-sm text-primary hover:underline">
-                      View all
-                    </a>
-                  </div>
-                  <div className="space-y-4">
-                    {transcripts.map(transcript => (
-                      <div 
-                        key={transcript.id} 
-                        className="p-4 rounded-lg bg-secondary/50 cursor-pointer hover:bg-secondary/70 transition-colors"
-                        onClick={() => {
-                          setSelectedTranscript(transcript);
-                          setIsModalOpen(true);
-                        }}
-                      >
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm font-medium">Call #{transcript.id}</span>
-                          <Badge variant="secondary" className={getSentimentStyles(transcript.metrics.sentiment)}>
-                            {capitalizeFirstLetter(transcript.metrics.sentiment)}
-                          </Badge>
-                        </div>
-                        <p className="text-sm text-muted-foreground">{transcript.transcription.slice(0, 100)}...</p>
-                      </div>
+        <div className="flex-1 p-8">
+          <div className="max-w-7xl mx-auto">
+            <header className="mb-8">
+              <div className="flex items-center justify-between mb-2">
+                <h1 className="text-3xl font-bold animate-fade-down">Welcome to Kleant</h1>
+                <Select value={timeFilter} onValueChange={setTimeFilter}>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Select time range" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {timeFilters.map((filter) => (
+                      <SelectItem key={filter.value} value={filter.value}>
+                        {filter.label}
+                      </SelectItem>
                     ))}
-                  </div>
-                </Card>
+                  </SelectContent>
+                </Select>
+              </div>
+              <p className="text-muted-foreground animate-fade-up">Monitor and analyze your customer interactions in real-time</p>
+            </header>
 
-                <Card className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
+            <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+              {kpis.map(kpi => <Card key={kpi.title} className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
                   <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-lg font-semibold">Weekly Performance Trend</h2>
-                    <a href="/analytics" className="text-sm text-primary hover:underline">
-                      View details
-                    </a>
+                    {kpi.icon && <kpi.icon className="w-6 h-6 text-primary" />}
+                    <Badge variant="secondary" className={`${kpi.trend.startsWith('+') ? 'bg-green-100 text-green-800 hover:bg-green-100' : 'bg-red-100 text-red-800 hover:bg-red-100'}`}>
+                      {kpi.trend}
+                    </Badge>
                   </div>
-                  <div className="h-[300px]">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <AreaChart data={performanceData}>
-                        <defs>
-                          <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.1}/>
-                            <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
-                          </linearGradient>
-                        </defs>
-                        <XAxis 
-                          dataKey="date" 
-                          axisLine={false}
-                          tickLine={false}
-                          tick={{ fill: '#666', fontSize: 12 }}
-                        />
-                        <YAxis 
-                          axisLine={false}
-                          tickLine={false}
-                          tick={{ fill: '#666', fontSize: 12 }}
-                          tickFormatter={(value) => `$${value.toLocaleString()}`}
-                        />
-                        <Tooltip
-                          formatter={(value: number) => [`$${value.toLocaleString()}`, 'Value']}
-                          contentStyle={{
-                            backgroundColor: '#fff',
-                            border: 'none',
-                            borderRadius: '8px',
-                            boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
-                          }}
-                        />
-                        <Area
-                          type="monotone"
-                          dataKey="value"
-                          stroke="#3b82f6"
-                          strokeWidth={2}
-                          fill="url(#colorValue)"
-                        />
-                      </AreaChart>
-                    </ResponsiveContainer>
-                  </div>
-                </Card>
-              </section>
+                  <h3 className="text-sm font-medium text-muted-foreground">{kpi.title}</h3>
+                  <p className="text-2xl font-bold mt-1">{kpi.value}</p>
+                </Card>)}
+            </section>
 
-              <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-                <DialogContent className="max-w-2xl">
-                  <DialogHeader>
-                    <DialogTitle className="flex items-center gap-2">
-                      <PlayCircle className="w-5 h-5" />
-                      Call #{selectedTranscript?.id}
-                    </DialogTitle>
-                  </DialogHeader>
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4 mb-4">
-                      <div className="flex flex-col items-center p-3 bg-secondary/30 rounded-lg">
-                        <Timer className="w-5 h-5 mb-1 text-primary" />
-                        <span className="text-sm font-medium">{selectedTranscript?.duration}</span>
-                        <span className="text-xs text-muted-foreground">Duration</span>
-                      </div>
-                      <div className="flex flex-col items-center p-3 bg-secondary/30 rounded-lg">
-                        <MessageCircle className="w-5 h-5 mb-1 text-primary" />
-                        <span className="text-sm font-medium">{selectedTranscript?.metrics.wordCount}</span>
-                        <span className="text-xs text-muted-foreground">Words</span>
-                      </div>
-                      <div className="flex flex-col items-center p-3 bg-secondary/30 rounded-lg">
-                        <Volume2 className="w-5 h-5 mb-1 text-primary" />
-                        <Badge variant="secondary" className={selectedTranscript?.metrics.sentiment && getSentimentStyles(selectedTranscript.metrics.sentiment)}>
-                          {selectedTranscript?.metrics.sentiment && capitalizeFirstLetter(selectedTranscript.metrics.sentiment)}
+            <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <Card className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-lg font-semibold">Recent Transcripts</h2>
+                  <a href="/transcripts" className="text-sm text-primary hover:underline">
+                    View all
+                  </a>
+                </div>
+                <div className="space-y-4">
+                  {transcripts.map(transcript => (
+                    <div 
+                      key={transcript.id} 
+                      className="p-4 rounded-lg bg-secondary/50 cursor-pointer hover:bg-secondary/70 transition-colors"
+                      onClick={() => {
+                        setSelectedTranscript(transcript);
+                        setIsModalOpen(true);
+                      }}
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-sm font-medium">Call #{transcript.id}</span>
+                        <Badge variant="secondary" className={getSentimentStyles(transcript.metrics.sentiment)}>
+                          {capitalizeFirstLetter(transcript.metrics.sentiment)}
                         </Badge>
-                        <span className="text-xs text-muted-foreground">Sentiment</span>
                       </div>
-                      <div className="flex flex-col items-center p-3 bg-secondary/30 rounded-lg">
-                        <TrendingUp className="w-5 h-5 mb-1 text-primary" />
-                        <span className="text-sm font-medium">
-                          {selectedTranscript?.metrics.speakingRatio.agent}% / {selectedTranscript?.metrics.speakingRatio.customer}%
-                        </span>
-                        <span className="text-xs text-muted-foreground">Agent/Customer Ratio</span>
-                      </div>
+                      <p className="text-sm text-muted-foreground">{transcript.transcription.slice(0, 100)}...</p>
                     </div>
+                  ))}
+                </div>
+              </Card>
 
-                    <div className="bg-secondary/30 p-3 rounded-lg">
-                      <h4 className="text-sm font-medium mb-2">Conversation Tone</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {selectedTranscript?.metrics.tone.map((tone, index) => (
-                          <span key={index} className="px-2 py-1 bg-primary/10 rounded-full text-xs text-primary">
-                            {tone}
-                          </span>
-                        ))}
-                      </div>
+              <Card className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-lg font-semibold">Weekly Performance Trend</h2>
+                  <a href="/analytics" className="text-sm text-primary hover:underline">
+                    View details
+                  </a>
+                </div>
+                <div className="h-[300px]">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={performanceData}>
+                      <defs>
+                        <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.1}/>
+                          <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                        </linearGradient>
+                      </defs>
+                      <XAxis 
+                        dataKey="date" 
+                        axisLine={false}
+                        tickLine={false}
+                        tick={{ fill: '#666', fontSize: 12 }}
+                      />
+                      <YAxis 
+                        axisLine={false}
+                        tickLine={false}
+                        tick={{ fill: '#666', fontSize: 12 }}
+                        tickFormatter={(value) => `$${value.toLocaleString()}`}
+                      />
+                      <Tooltip
+                        formatter={(value: number) => [`$${value.toLocaleString()}`, 'Value']}
+                        contentStyle={{
+                          backgroundColor: '#fff',
+                          border: 'none',
+                          borderRadius: '8px',
+                          boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                        }}
+                      />
+                      <Area
+                        type="monotone"
+                        dataKey="value"
+                        stroke="#3b82f6"
+                        strokeWidth={2}
+                        fill="url(#colorValue)"
+                      />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
+              </Card>
+            </section>
+
+            <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+              <DialogContent className="max-w-2xl">
+                <DialogHeader>
+                  <DialogTitle className="flex items-center gap-2">
+                    <PlayCircle className="w-5 h-5" />
+                    Call #{selectedTranscript?.id}
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className="flex flex-col items-center p-3 bg-secondary/30 rounded-lg">
+                      <Timer className="w-5 h-5 mb-1 text-primary" />
+                      <span className="text-sm font-medium">{selectedTranscript?.duration}</span>
+                      <span className="text-xs text-muted-foreground">Duration</span>
                     </div>
-
-                    <div className="bg-secondary/50 p-4 rounded-lg">
-                      <audio controls className="w-full">
-                        <source src={selectedTranscript?.audio} type="audio/mpeg" />
-                        Your browser does not support the audio element.
-                      </audio>
+                    <div className="flex flex-col items-center p-3 bg-secondary/30 rounded-lg">
+                      <MessageCircle className="w-5 h-5 mb-1 text-primary" />
+                      <span className="text-sm font-medium">{selectedTranscript?.metrics.wordCount}</span>
+                      <span className="text-xs text-muted-foreground">Words</span>
                     </div>
-
-                    <div className="max-h-[400px] overflow-y-auto">
-                      <h3 className="font-semibold mb-2">Transcription</h3>
-                      <div className="whitespace-pre-line text-sm text-muted-foreground">
-                        {selectedTranscript?.transcription}
-                      </div>
+                    <div className="flex flex-col items-center p-3 bg-secondary/30 rounded-lg">
+                      <Volume2 className="w-5 h-5 mb-1 text-primary" />
+                      <Badge variant="secondary" className={selectedTranscript?.metrics.sentiment && getSentimentStyles(selectedTranscript.metrics.sentiment)}>
+                        {selectedTranscript?.metrics.sentiment && capitalizeFirstLetter(selectedTranscript.metrics.sentiment)}
+                      </Badge>
+                      <span className="text-xs text-muted-foreground">Sentiment</span>
+                    </div>
+                    <div className="flex flex-col items-center p-3 bg-secondary/30 rounded-lg">
+                      <TrendingUp className="w-5 h-5 mb-1 text-primary" />
+                      <span className="text-sm font-medium">
+                        {selectedTranscript?.metrics.speakingRatio.agent}% / {selectedTranscript?.metrics.speakingRatio.customer}%
+                      </span>
+                      <span className="text-xs text-muted-foreground">Agent/Customer Ratio</span>
                     </div>
                   </div>
-                </DialogContent>
-              </Dialog>
-            </div>
+
+                  <div className="bg-secondary/30 p-3 rounded-lg">
+                    <h4 className="text-sm font-medium mb-2">Conversation Tone</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedTranscript?.metrics.tone.map((tone, index) => (
+                        <span key={index} className="px-2 py-1 bg-primary/10 rounded-full text-xs text-primary">
+                          {tone}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="bg-secondary/50 p-4 rounded-lg">
+                    <audio controls className="w-full">
+                      <source src={selectedTranscript?.audio} type="audio/mpeg" />
+                      Your browser does not support the audio element.
+                    </audio>
+                  </div>
+
+                  <div className="max-h-[400px] overflow-y-auto">
+                    <h3 className="font-semibold mb-2">Transcription</h3>
+                    <div className="whitespace-pre-line text-sm text-muted-foreground">
+                      {selectedTranscript?.transcription}
+                    </div>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
-        </main>
-      </div>
-    </SidebarProvider>;
+        </div>
+      </main>
+    </div>
+  </SidebarProvider>;
 };
 
 export default Index;
