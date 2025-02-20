@@ -57,7 +57,10 @@ export function AppSidebar() {
             <SidebarMenu>
               {mainMenuItems.map(item => <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url} className="flex items-center gap-2 font-medium transition-colors duration-200 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md">
+                    <a 
+                      href={item.url} 
+                      className={`flex items-center gap-2 font-medium transition-colors duration-200 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md ${item.url === "/" ? "bg-zinc-100" : ""}`}
+                    >
                       {item.icon && <item.icon className="w-5 h-5" />}
                       <span>{item.title}</span>
                     </a>
@@ -73,7 +76,10 @@ export function AppSidebar() {
               <SidebarMenu>
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild>
-                    <a href={settingsMenuItem.url} className="flex items-center gap-2 font-medium transition-colors duration-200 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md">
+                    <a 
+                      href={settingsMenuItem.url} 
+                      className="flex items-center gap-2 font-medium transition-colors duration-200 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md"
+                    >
                       <settingsMenuItem.icon className="w-5 h-5" />
                       <span>{settingsMenuItem.title}</span>
                     </a>
