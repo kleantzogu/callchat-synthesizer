@@ -162,6 +162,14 @@ export function AgentsCard() {
   const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const getInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map(word => word[0])
+      .join('')
+      .toUpperCase();
+  };
+
   return (
     <>
       <Card className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
@@ -181,11 +189,9 @@ export function AgentsCard() {
                 setIsModalOpen(true);
               }}
             >
-              <img
-                src={agent.avatar}
-                alt={agent.name}
-                className="w-10 h-10 rounded-full"
-              />
+              <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold">
+                {getInitials(agent.name)}
+              </div>
               <div className="flex-1 min-w-0">
                 <h3 className="text-sm font-medium truncate">{agent.name}</h3>
                 <div className="flex items-center gap-4 mt-1 text-sm text-muted-foreground">
