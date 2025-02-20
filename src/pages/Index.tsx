@@ -1,6 +1,7 @@
+
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
-import { BarChart2, Clock, Heart, PlayCircle, ThumbsUp, UserCheck, Timer, Volume2, MessageCircle, TrendingUp } from "lucide-react";
+import { BarChart2, Clock, Heart, PlayCircle, ThumbsUp, UserCheck, Timer, Volume2, MessageCircle, TrendingUp, Bell, User } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState } from "react";
@@ -128,6 +129,19 @@ const Index = () => {
         <AppSidebar />
         <main className="flex-1 p-8 bg-zinc-100">
           <div className="max-w-7xl mx-auto">
+            <div className="flex items-center justify-between mb-6 bg-white p-4 rounded-lg shadow-sm">
+              <h2 className="text-xl font-semibold">Dashboard</h2>
+              <div className="flex items-center gap-4">
+                <button className="relative p-2 hover:bg-gray-100 rounded-full transition-colors">
+                  <Bell className="w-5 h-5" />
+                  <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+                </button>
+                <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                  <User className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+
             <header className="mb-8">
               <h1 className="text-3xl font-bold mb-2 animate-fade-down">Welcome to Kleant</h1>
               <p className="text-muted-foreground animate-fade-up">Monitor and analyze your customer interactions in real-time</p>
