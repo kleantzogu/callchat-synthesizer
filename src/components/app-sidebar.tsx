@@ -1,7 +1,6 @@
-
 import { Home, MessageSquare, BarChart2, Settings, User, Bell, LogOut, Lock } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,6 +8,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import { toast } from "sonner";
 
 type MenuItem = {
   title: string;
@@ -64,11 +64,12 @@ const settingsMenuItems = [
 
 export function AppSidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
   const currentPath = location.pathname;
 
   const handleLogout = () => {
-    console.log("Logout clicked");
-    // Add logout logic here
+    toast.success("Successfully logged out!");
+    navigate("/login");
   };
 
   return (
