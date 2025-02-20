@@ -1,10 +1,9 @@
-
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
-import { MessageSquare, Search, Bell, User, PlayCircle, Timer, Volume2, MessageCircle, TrendingUp } from "lucide-react";
+import { MessageSquare, Search, Bell, User, PlayCircle, Timer, Volume2, MessageCircle, TrendingUp, CheckCircle, MinusCircle, AlertCircle, XCircle } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -103,6 +102,15 @@ const notifications = [
 const Transcripts = () => {
   const [selectedTranscript, setSelectedTranscript] = useState<typeof transcripts[0] | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("all");
+
+  const filteredTranscripts = transcripts.filter(transcript => {
+    if (activeTab === "all") return true;
+    if (activeTab === "neutral") return transcript.sentiment === "Neutral";
+    if (activeTab === "bad") return transcript.sentiment === "Bad";
+    if (activeTab === "very-bad") return transcript.sentiment === "Very Bad";
+    return true;
+  });
 
   return (
     <SidebarProvider>
@@ -158,8 +166,8 @@ const Transcripts = () => {
           </div>
 
           <div className="flex-1 p-8">
-            <div className="max-w-7xl mx-auto">
-              <div className="flex justify-between items-start mb-8">
+            <div className="max-w-7xl mx-auto space-y-6">
+              <div className="flex justify-between items-start">
                 <div>
                   <h1 className="text-3xl font-bold mb-2 animate-fade-down">Transcripts</h1>
                   <p className="text-muted-foreground animate-fade-up">Review and analyze your conversation transcripts</p>
@@ -176,8 +184,29 @@ const Transcripts = () => {
                 </div>
               </div>
 
+              <Tabs defaultValue="all" className="w-full" onValueChange={setActiveTab}>
+                <TabsList className="grid w-full grid-cols-4 lg:w-[400px]">
+                  <TabsTrigger value="all" className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4" />
+                    All
+                  </TabsTrigger>
+                  <TabsTrigger value="neutral" className="flex items-center gap-2">
+                    <MinusCircle className="w-4 h-4" />
+                    Neutral
+                  </TabsTrigger>
+                  <TabsTrigger value="bad" className="flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4" />
+                    Bad
+                  </TabsTrigger>
+                  <TabsTrigger value="very-bad" className="flex items-center gap-2">
+                    <XCircle className="w-4 h-4" />
+                    Very Bad
+                  </TabsTrigger>
+                </TabsList>
+              </Tabs>
+
               <Card className="divide-y bg-white">
-                {transcripts.map((transcript, index) => (
+                {filteredTranscripts.map((transcript, index) => (
                   <div
                     key={transcript.id}
                     onClick={() => {
