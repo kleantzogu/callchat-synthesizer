@@ -1,9 +1,8 @@
-
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
-import { Clock, ThumbsUp, AlertTriangle, Bell, User } from "lucide-react";
+import { Clock, ThumbsUp, AlertTriangle, Bell, User, Timer, SmileIcon, Award, CheckCircle } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { Area, AreaChart, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { Area, AreaChart, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-const data = [
+const weeklyData = [
   { name: 'Mon', value: 85 },
   { name: 'Tue', value: 88 },
   { name: 'Wed', value: 92 },
@@ -19,6 +18,65 @@ const data = [
   { name: 'Fri', value: 91 },
   { name: 'Sat', value: 84 },
   { name: 'Sun', value: 89 },
+];
+
+const metricCards = [
+  {
+    title: "Response Time",
+    value: "2.5 min",
+    trend: "-12%",
+    icon: Timer,
+    data: [
+      { name: '1', value: 3 },
+      { name: '2', value: 2.8 },
+      { name: '3', value: 2.6 },
+      { name: '4', value: 2.5 },
+      { name: '5', value: 2.3 },
+    ],
+    color: "#3b82f6"
+  },
+  {
+    title: "Satisfaction",
+    value: "92%",
+    trend: "+5%",
+    icon: SmileIcon,
+    data: [
+      { name: '1', value: 85 },
+      { name: '2', value: 88 },
+      { name: '3', value: 90 },
+      { name: '4', value: 91 },
+      { name: '5', value: 92 },
+    ],
+    color: "#10b981"
+  },
+  {
+    title: "Service Quality",
+    value: "4.8/5",
+    trend: "+0.3",
+    icon: Award,
+    data: [
+      { name: '1', value: 4.5 },
+      { name: '2', value: 4.6 },
+      { name: '3', value: 4.7 },
+      { name: '4', value: 4.7 },
+      { name: '5', value: 4.8 },
+    ],
+    color: "#8b5cf6"
+  },
+  {
+    title: "Resolution Rate",
+    value: "95%",
+    trend: "+8%",
+    icon: CheckCircle,
+    data: [
+      { name: '1', value: 87 },
+      { name: '2', value: 89 },
+      { name: '3', value: 91 },
+      { name: '4', value: 93 },
+      { name: '5', value: 95 },
+    ],
+    color: "#f59e0b"
+  }
 ];
 
 const insights = [
@@ -130,20 +188,40 @@ const Analytics = () => {
                 <p className="text-muted-foreground animate-fade-up">Track and analyze your performance metrics</p>
               </header>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                {insights.map((insight) => (
-                  <Card key={insight.title} className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                {metricCards.map((metric) => (
+                  <Card key={metric.title} className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
                     <div className="flex items-center justify-between mb-4">
-                      <insight.icon className="w-6 h-6 text-primary" />
+                      <div className="flex items-center gap-2">
+                        <metric.icon className="w-5 h-5" style={{ color: metric.color }} />
+                        <h3 className="font-medium">{metric.title}</h3>
+                      </div>
                       <span className={`text-xs font-medium ${
-                        insight.trend.startsWith('+') ? 'text-green-500' : 'text-red-500'
+                        metric.trend.startsWith('+') ? 'text-green-500' : 'text-red-500'
                       }`}>
-                        {insight.trend}
+                        {metric.trend}
                       </span>
                     </div>
-                    <h3 className="text-sm font-medium text-muted-foreground">{insight.title}</h3>
-                    <p className="text-2xl font-bold mt-1">{insight.value}</p>
-                    <p className="text-sm text-muted-foreground mt-2">{insight.description}</p>
+                    <p className="text-2xl font-bold mb-4">{metric.value}</p>
+                    <div className="h-[100px] w-full">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <AreaChart data={metric.data}>
+                          <defs>
+                            <linearGradient id={`color${metric.title.replace(/\s+/g, '')}`} x1="0" y1="0" x2="0" y2="1">
+                              <stop offset="5%" stopColor={metric.color} stopOpacity={0.1}/>
+                              <stop offset="95%" stopColor={metric.color} stopOpacity={0}/>
+                            </linearGradient>
+                          </defs>
+                          <Area
+                            type="monotone"
+                            dataKey="value"
+                            stroke={metric.color}
+                            strokeWidth={2}
+                            fill={`url(#color${metric.title.replace(/\s+/g, '')})`}
+                          />
+                        </AreaChart>
+                      </ResponsiveContainer>
+                    </div>
                   </Card>
                 ))}
               </div>
@@ -152,7 +230,7 @@ const Analytics = () => {
                 <h2 className="text-lg font-semibold mb-4">Weekly Performance Trend</h2>
                 <div className="h-[400px] w-full">
                   <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={data}>
+                    <AreaChart data={weeklyData}>
                       <defs>
                         <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
                           <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.1}/>
