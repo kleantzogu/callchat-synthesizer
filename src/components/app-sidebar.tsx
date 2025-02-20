@@ -74,7 +74,7 @@ export function AppSidebar() {
     navigate("/login");
   };
 
-  const linkClasses = `flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 h-10 px-3 rounded-md`;
+  const linkClasses = `flex w-full items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 h-10 px-3 rounded-md`;
 
   return (
     <Sidebar>
