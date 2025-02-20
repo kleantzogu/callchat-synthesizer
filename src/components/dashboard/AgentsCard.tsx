@@ -2,9 +2,9 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { ThumbsUp, Clock, Star } from "lucide-react";
-import { TranscriptDialog } from "./TranscriptDialog";
+import { AgentDetailsDialog } from "./AgentDetailsDialog";
 
-interface Agent {
+export interface Agent {
   id: number;
   name: string;
   avatar: string;
@@ -159,7 +159,7 @@ const agents: Agent[] = [
 ];
 
 export function AgentsCard() {
-  const [selectedTranscript, setSelectedTranscript] = useState<Agent["lastTranscript"] | null>(null);
+  const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -177,7 +177,7 @@ export function AgentsCard() {
               key={agent.id} 
               className="flex items-center gap-4 p-3 rounded-lg transition-colors hover:bg-secondary/50 cursor-pointer"
               onClick={() => {
-                setSelectedTranscript(agent.lastTranscript);
+                setSelectedAgent(agent);
                 setIsModalOpen(true);
               }}
             >
@@ -211,8 +211,8 @@ export function AgentsCard() {
         </div>
       </Card>
 
-      <TranscriptDialog 
-        transcript={selectedTranscript}
+      <AgentDetailsDialog 
+        agent={selectedAgent}
         isOpen={isModalOpen}
         onOpenChange={setIsModalOpen}
       />
