@@ -1,10 +1,10 @@
-
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Bell, Lock, User, Globe } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Toggle } from "@/components/ui/toggle";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,9 +28,9 @@ const settingSections = [
     icon: Bell,
     description: "Configure how you receive notifications",
     fields: [
-      { label: "Email Notifications", type: "checkbox" },
-      { label: "Desktop Notifications", type: "checkbox" },
-      { label: "Daily Summary", type: "checkbox" }
+      { label: "Email Notifications", type: "toggle" },
+      { label: "Desktop Notifications", type: "toggle" },
+      { label: "Daily Summary", type: "toggle" }
     ]
   },
   {
@@ -38,7 +38,7 @@ const settingSections = [
     icon: Lock,
     description: "Manage your security settings and preferences",
     fields: [
-      { label: "Two-Factor Authentication", type: "checkbox" },
+      { label: "Two-Factor Authentication", type: "toggle" },
       { label: "Session Timeout (minutes)", type: "number", placeholder: "30" }
     ]
   },
@@ -164,11 +164,8 @@ const Settings = () => {
                       {section.fields.map((field) => (
                         <div key={field.label} className="flex items-center justify-between">
                           <label className="text-sm font-medium">{field.label}</label>
-                          {field.type === "checkbox" ? (
-                            <input
-                              type="checkbox"
-                              className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
-                            />
+                          {field.type === "toggle" ? (
+                            <Toggle aria-label={field.label} />
                           ) : field.type === "select" ? (
                             <select className="rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring">
                               {field.options?.map((option) => (
