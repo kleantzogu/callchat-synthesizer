@@ -173,9 +173,11 @@ export function AppSidebar() {
                       </button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="w-48">
-                      <DropdownMenuItem className="flex items-center gap-2">
-                        <Lock className="w-4 h-4" />
-                        <span>Change Password</span>
+                      <DropdownMenuItem asChild className="flex items-center gap-2">
+                        <Link to="/change-password" className="flex items-center gap-2">
+                          <Lock className="w-4 h-4" />
+                          <span>Change Password</span>
+                        </Link>
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem onClick={handleLogout} className="flex items-center gap-2 text-red-600">

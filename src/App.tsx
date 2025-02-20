@@ -6,6 +6,7 @@ import Settings from "./pages/Settings";
 import Transcripts from "./pages/Transcripts";
 import NotFound from "./pages/NotFound";
 import Notifications from "./pages/Notifications";
+import ChangePassword from "./pages/ChangePassword";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
   {
     path: "/notifications",
     element: <Notifications />,
+  },
+  {
+    path: "/change-password",
+    element: <ChangePassword />,
   },
   {
     path: "*",
