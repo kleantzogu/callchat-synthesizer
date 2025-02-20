@@ -15,7 +15,7 @@ export function PerformanceSection({ data }: PerformanceSectionProps) {
           View details
         </a>
       </div>
-      <div className="h-[280px]">
+      <div className="h-[350px]">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data} margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
             <defs>
