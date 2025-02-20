@@ -186,6 +186,7 @@ const Transcripts = () => {
   const filteredTranscripts = transcripts.filter(transcript => {
     const matchesSentiment = activeTab === "all" || 
       (activeTab === "neutral" && transcript.sentiment === "Neutral") ||
+      (activeTab === "positive" && transcript.sentiment === "Positive") ||
       (activeTab === "bad" && transcript.sentiment === "Bad") ||
       (activeTab === "very-bad" && transcript.sentiment === "Very Bad");
 
@@ -285,10 +286,14 @@ const Transcripts = () => {
               </div>
 
               <Tabs defaultValue="all" className="w-full" onValueChange={setActiveTab}>
-                <TabsList className="grid w-full grid-cols-4 lg:w-[400px]">
+                <TabsList className="grid w-full grid-cols-5 lg:w-[500px]">
                   <TabsTrigger value="all" className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4" />
                     All
+                  </TabsTrigger>
+                  <TabsTrigger value="positive" className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-500" />
+                    Positive
                   </TabsTrigger>
                   <TabsTrigger value="neutral" className="flex items-center gap-2">
                     <MinusCircle className="w-4 h-4" />
