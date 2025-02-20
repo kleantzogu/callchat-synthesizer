@@ -9,6 +9,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const weeklyData = [
   { name: 'Mon', value: 85 },
@@ -183,9 +190,23 @@ const Analytics = () => {
 
           <div className="flex-1 p-8">
             <div className="max-w-7xl mx-auto">
-              <header className="mb-8">
-                <h1 className="text-3xl font-bold mb-2 animate-fade-down">Analytics</h1>
-                <p className="text-muted-foreground animate-fade-up">Track and analyze your performance metrics</p>
+              <header className="mb-8 flex items-center justify-between">
+                <div>
+                  <h1 className="text-3xl font-bold mb-2 animate-fade-down">Analytics</h1>
+                  <p className="text-muted-foreground animate-fade-up">Track and analyze your performance metrics</p>
+                </div>
+                <Select defaultValue="7days">
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Select time period" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="today">Today</SelectItem>
+                    <SelectItem value="7days">Last 7 Days</SelectItem>
+                    <SelectItem value="30days">Last 30 Days</SelectItem>
+                    <SelectItem value="6months">Last 6 Months</SelectItem>
+                    <SelectItem value="12months">Last 12 Months</SelectItem>
+                  </SelectContent>
+                </Select>
               </header>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
