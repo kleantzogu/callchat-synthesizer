@@ -1,9 +1,17 @@
+
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { MessageSquare, Search, Bell, User, PlayCircle, Timer, Volume2, MessageCircle, TrendingUp, CheckCircle, MinusCircle, AlertCircle, XCircle } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -103,13 +111,18 @@ const Transcripts = () => {
   const [selectedTranscript, setSelectedTranscript] = useState<typeof transcripts[0] | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("all");
+  const [supportType, setSupportType] = useState("all");
 
   const filteredTranscripts = transcripts.filter(transcript => {
-    if (activeTab === "all") return true;
-    if (activeTab === "neutral") return transcript.sentiment === "Neutral";
-    if (activeTab === "bad") return transcript.sentiment === "Bad";
-    if (activeTab === "very-bad") return transcript.sentiment === "Very Bad";
-    return true;
+    const matchesSentiment = activeTab === "all" || 
+      (activeTab === "neutral" && transcript.sentiment === "Neutral") ||
+      (activeTab === "bad" && transcript.sentiment === "Bad") ||
+      (activeTab === "very-bad" && transcript.sentiment === "Very Bad");
+
+    const matchesSupportType = supportType === "all" || 
+      transcript.topic === supportType;
+
+    return matchesSentiment && matchesSupportType;
   });
 
   return (
@@ -172,7 +185,18 @@ const Transcripts = () => {
                   <h1 className="text-3xl font-bold mb-2 animate-fade-down">Transcripts</h1>
                   <p className="text-muted-foreground animate-fade-up">Review and analyze your conversation transcripts</p>
                 </div>
-                <div className="w-80">
+                <div className="flex gap-4">
+                  <Select value={supportType} onValueChange={setSupportType}>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Support Type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Types</SelectItem>
+                      <SelectItem value="Product Inquiry">Product Inquiry</SelectItem>
+                      <SelectItem value="Technical Support">Technical Support</SelectItem>
+                      <SelectItem value="Billing Question">Billing Questions</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <div className="relative">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                     <input
