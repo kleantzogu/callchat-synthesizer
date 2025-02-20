@@ -1,4 +1,4 @@
-<lov-code>
+
 import { Home, MessageSquare, BarChart2, Settings, User, Bell, LogOut, Lock } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 import { useLocation, Link } from "react-router-dom";
@@ -71,7 +71,8 @@ export function AppSidebar() {
     // Add logout logic here
   };
 
-  return <Sidebar>
+  return (
+    <Sidebar>
       <SidebarContent className="bg-white">
         <div className="flex flex-row items-center justify-between p-4 mb-0">
           <svg width="150" height="34" viewBox="0 0 228 52" fill="none" xmlns="http://www.w3.org/2000/svg" className="mb-2">
@@ -166,4 +167,29 @@ export function AppSidebar() {
                 <SidebarMenuItem>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <button className="flex w-full items-center
+                      <button className="flex w-full items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md">
+                        <User className="w-5 h-5" />
+                        <span>Account</span>
+                      </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-48">
+                      <DropdownMenuItem className="flex items-center gap-2">
+                        <Lock className="w-4 h-4" />
+                        <span>Change Password</span>
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={handleLogout} className="flex items-center gap-2 text-red-600">
+                        <LogOut className="w-4 h-4" />
+                        <span>Logout</span>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </div>
+      </SidebarContent>
+    </Sidebar>
+  );
+}
