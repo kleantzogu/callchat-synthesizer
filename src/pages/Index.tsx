@@ -1,8 +1,14 @@
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
-import { BarChart2, Clock, Heart, PlayCircle, ThumbsUp, UserCheck, Timer, Volume2, MessageCircle, TrendingUp, Bell, User } from "lucide-react";
+import { BarChart2, Clock, Heart, PlayCircle, ThumbsUp, UserCheck, Timer, Volume2, MessageCircle, TrendingUp, Bell, User, Check } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useState } from "react";
 
 type KPI = {
@@ -108,6 +114,30 @@ const kpis: KPI[] = [
   }
 ];
 
+const notifications = [
+  {
+    id: 1,
+    title: "New transcript available",
+    description: "Call #123 has been transcribed",
+    time: "2 mins ago",
+    unread: true,
+  },
+  {
+    id: 2,
+    title: "Analysis complete",
+    description: "Sentiment analysis finished for call #456",
+    time: "1 hour ago",
+    unread: true,
+  },
+  {
+    id: 3,
+    title: "System update",
+    description: "New features available in the dashboard",
+    time: "2 hours ago",
+    unread: false,
+  }
+];
+
 const Index = () => {
   const [selectedTranscript, setSelectedTranscript] = useState<Transcript | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -131,10 +161,31 @@ const Index = () => {
             <div className="flex items-center justify-between h-16 px-8">
               <h2 className="text-xl font-semibold">Dashboard</h2>
               <div className="flex items-center gap-4">
-                <button className="relative p-2 hover:bg-gray-100 rounded-full transition-colors">
-                  <Bell className="w-5 h-5" />
-                  <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
-                </button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button className="relative p-2 hover:bg-gray-100 rounded-full transition-colors">
+                      <Bell className="w-5 h-5" />
+                      <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-80">
+                    {notifications.map((notification) => (
+                      <DropdownMenuItem key={notification.id} className="flex flex-col items-start p-3 space-y-1 cursor-pointer">
+                        <div className="flex items-center justify-between w-full">
+                          <span className="font-medium">{notification.title}</span>
+                          <span className="text-xs text-muted-foreground">{notification.time}</span>
+                        </div>
+                        <p className="text-sm text-muted-foreground">{notification.description}</p>
+                        {notification.unread && (
+                          <div className="flex items-center gap-1 text-xs text-blue-500">
+                            <div className="w-1 h-1 rounded-full bg-blue-500" />
+                            New
+                          </div>
+                        )}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
                 <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
                   <User className="w-5 h-5" />
                 </button>
@@ -223,17 +274,17 @@ const Index = () => {
                       </div>
                       <div className="flex flex-col items-center p-3 bg-secondary/30 rounded-lg">
                         <Volume2 className="w-5 h-5 mb-1 text-primary" />
-                        <span className="text-sm font-medium">
-                          {selectedTranscript?.metrics.speakingRatio.agent}% / {selectedTranscript?.metrics.speakingRatio.customer}%
-                        </span>
-                        <span className="text-xs text-muted-foreground">Agent/Customer Ratio</span>
-                      </div>
-                      <div className="flex flex-col items-center p-3 bg-secondary/30 rounded-lg">
-                        <TrendingUp className="w-5 h-5 mb-1 text-primary" />
                         <span className={`text-sm font-medium capitalize ${selectedTranscript?.metrics.sentiment && getSentimentColor(selectedTranscript.metrics.sentiment)}`}>
                           {selectedTranscript?.metrics.sentiment}
                         </span>
                         <span className="text-xs text-muted-foreground">Sentiment</span>
+                      </div>
+                      <div className="flex flex-col items-center p-3 bg-secondary/30 rounded-lg">
+                        <TrendingUp className="w-5 h-5 mb-1 text-primary" />
+                        <span className="text-sm font-medium">
+                          {selectedTranscript?.metrics.speakingRatio.agent}% / {selectedTranscript?.metrics.speakingRatio.customer}%
+                        </span>
+                        <span className="text-xs text-muted-foreground">Agent/Customer Ratio</span>
                       </div>
                     </div>
 
