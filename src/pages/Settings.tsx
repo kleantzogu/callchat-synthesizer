@@ -1,3 +1,4 @@
+
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Card } from "@/components/ui/card";
@@ -84,10 +85,10 @@ const Settings = () => {
       <div className="min-h-screen flex w-full">
         {!isMobile && <AppSidebar />}
         <main className="flex-1 flex flex-col bg-zinc-100">
-          <div className="w-full bg-white border-b">
-            <div className="flex items-center justify-between h-16 px-4 sm:px-8">
-              <h2 className="text-xl font-semibold">Settings</h2>
-              {!isMobile && (
+          {!isMobile && (
+            <div className="w-full bg-white border-b">
+              <div className="flex items-center justify-between h-16 px-4 sm:px-8">
+                <h2 className="text-xl font-semibold">Settings</h2>
                 <div className="flex items-center gap-4">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -130,9 +131,16 @@ const Settings = () => {
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </div>
-              )}
+              </div>
             </div>
-          </div>
+          )}
+          {isMobile && (
+            <div className="w-full bg-white border-b">
+              <div className="h-16 px-4 flex items-center">
+                <h2 className="text-xl font-semibold">Settings</h2>
+              </div>
+            </div>
+          )}
 
           <div className="flex-1 p-4 sm:p-8">
             <div className="max-w-7xl mx-auto">
