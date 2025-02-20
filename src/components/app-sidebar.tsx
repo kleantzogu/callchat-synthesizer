@@ -1,5 +1,5 @@
 
-import { Home, MessageSquare, BarChart2, Settings } from "lucide-react";
+import { Home, MessageSquare, BarChart2, Settings, User, Bell } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 import { useLocation, Link } from "react-router-dom";
 
@@ -8,6 +8,7 @@ type MenuItem = {
   icon: React.ElementType;
   url: string;
 };
+
 const mainMenuItems: MenuItem[] = [{
   title: "Dashboard",
   icon: Home,
@@ -22,11 +23,18 @@ const mainMenuItems: MenuItem[] = [{
   url: "/analytics"
 }];
 
-const settingsMenuItem: MenuItem = {
-  title: "Settings",
-  icon: Settings,
-  url: "/settings"
-};
+const settingsMenuItems: MenuItem[] = [
+  {
+    title: "Settings",
+    icon: Settings,
+    url: "/settings"
+  },
+  {
+    title: "Profile",
+    icon: User,
+    url: "/profile"
+  }
+];
 
 export function AppSidebar() {
   const location = useLocation();
@@ -34,7 +42,7 @@ export function AppSidebar() {
 
   return <Sidebar>
       <SidebarContent className="bg-white">
-        <div className="flex flex-row items-center p-4 mb-0">
+        <div className="flex flex-row items-center justify-between p-4 mb-0">
           <svg width="150" height="34" viewBox="0 0 228 52" fill="none" xmlns="http://www.w3.org/2000/svg" className="mb-2">
             <path d="M217.574 14.0616H221.814V18.8616H227.414V22.3016H221.814V33.9816C221.814 35.7016 222.654 36.5816 224.294 36.5816H227.374V40.0616H223.854C219.774 40.0616 217.574 37.9416 217.574 33.9816V22.3016H214.334V18.8616H217.574V14.0616Z" fill="black" />
             <path d="M209.869 25.5416C209.429 23.2616 207.309 21.9016 205.109 21.9016C202.949 21.9016 201.189 23.0216 201.189 24.9016C201.229 26.8216 203.669 27.5816 205.909 28.0216C211.189 28.9816 214.549 30.3816 214.549 34.5416C214.549 38.7016 210.389 40.5416 205.869 40.5416C200.469 40.5416 196.589 37.8216 196.269 33.3816L200.629 33.1016C201.069 35.5016 202.909 37.0216 205.829 37.0216C207.749 37.0216 210.149 36.3416 210.149 34.3416C210.109 32.0616 207.429 31.7816 205.149 31.2616C200.629 30.3016 196.789 29.0616 196.789 25.0216C196.789 20.9016 200.149 18.3816 205.429 18.3816C210.029 18.3816 213.549 21.0616 214.229 25.3016L209.869 25.5416Z" fill="black" />
@@ -56,11 +64,16 @@ export function AppSidebar() {
             <path d="M50.3523 17.5135V35.6312C50.3523 36.6879 51.209 37.5453 52.2664 37.5453C53.3239 37.5453 54.1799 36.6886 54.1799 35.6312V17.5135C54.1799 16.4567 53.3232 15.5993 52.2664 15.5993C51.2097 15.5993 50.3523 16.456 50.3523 17.5135Z" fill="#2100B1" />
             <path d="M60.4183 31.5479V20.5752C60.4183 19.5185 59.5616 18.6611 58.5041 18.6611C57.4467 18.6611 56.5907 19.5178 56.5907 20.5752V31.5479C56.5907 32.6046 57.4474 33.462 58.5041 33.462C59.5609 33.462 60.4183 32.6053 60.4183 31.5479Z" fill="#2100B1" />
           </svg>
+          <button className="relative p-2 hover:bg-gray-100 rounded-full transition-colors">
+            <Bell className="w-5 h-5 text-zinc-600" />
+            <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+          </button>
         </div>
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {mainMenuItems.map(item => <SidebarMenuItem key={item.title}>
+              {mainMenuItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <Link 
                       to={item.url} 
@@ -70,7 +83,8 @@ export function AppSidebar() {
                       <span>{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
-                </SidebarMenuItem>)}
+                </SidebarMenuItem>
+              ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -79,17 +93,19 @@ export function AppSidebar() {
           <SidebarGroup>
             <SidebarGroupContent>
               <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
-                    <Link 
-                      to={settingsMenuItem.url} 
-                      className={`flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md ${settingsMenuItem.url === currentPath ? "bg-zinc-100 text-zinc-900" : ""}`}
-                    >
-                      <settingsMenuItem.icon className="w-5 h-5" />
-                      <span>{settingsMenuItem.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                {settingsMenuItems.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild>
+                      <Link 
+                        to={item.url} 
+                        className={`flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md ${item.url === currentPath ? "bg-zinc-100 text-zinc-900" : ""}`}
+                      >
+                        <item.icon className="w-5 h-5" />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
