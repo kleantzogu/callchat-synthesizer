@@ -1,3 +1,4 @@
+
 import { Home, MessageSquare, BarChart2, Settings, User, Bell, LogOut, Lock } from "lucide-react";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 import { useLocation, Link, useNavigate } from "react-router-dom";
@@ -43,7 +44,7 @@ const notifications = [
 const mainMenuItems: MenuItem[] = [{
   title: "Dashboard",
   icon: Home,
-  url: "/"
+  url: "/dashboard"
 }, {
   title: "Transcripts",
   icon: MessageSquare,
@@ -137,7 +138,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <Link 
                       to={item.url} 
-                      className={`flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md ${item.url === currentPath ? "bg-zinc-100 text-zinc-900" : ""}`}
+                      className={`flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md ${item.url === currentPath ? "bg-[#F1F1F1] text-zinc-900" : ""}`}
                     >
                       {item.icon && <item.icon className="w-5 h-5" />}
                       <span>{item.title}</span>
@@ -158,7 +159,7 @@ export function AppSidebar() {
                     <SidebarMenuButton asChild>
                       <Link 
                         to={item.url} 
-                        className={`flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md ${item.url === currentPath ? "bg-zinc-100 text-zinc-900" : ""}`}
+                        className={`flex items-center gap-2 font-medium transition-colors duration-200 text-zinc-600 hover:text-primary hover:bg-zinc-100 py-3 px-2 rounded-md ${item.url === currentPath ? "bg-[#F1F1F1] text-zinc-900" : ""}`}
                       >
                         <item.icon className="w-5 h-5" />
                         <span>{item.title}</span>
