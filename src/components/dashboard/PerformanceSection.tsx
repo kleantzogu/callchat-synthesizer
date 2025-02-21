@@ -9,7 +9,7 @@ interface PerformanceSectionProps {
 export function PerformanceSection({ data }: PerformanceSectionProps) {
   return (
     <Card className="p-4 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-8">
         <h2 className="text-lg font-semibold">Weekly Performance Trend</h2>
         <a href="/analytics" className="text-sm text-primary hover:underline">
           View details
