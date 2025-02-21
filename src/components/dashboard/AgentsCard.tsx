@@ -1,7 +1,18 @@
+
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { ThumbsUp, Clock, Star } from "lucide-react";
 import { AgentDetailsDialog } from "./AgentDetailsDialog";
+import { useLocation } from "react-router-dom";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 export interface Agent {
   id: number;
@@ -83,6 +94,16 @@ const agents: Agent[] = generateAgents(55);
 export function AgentsCard() {
   const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const location = useLocation();
+  const isDashboard = location.pathname === "/dashboard";
+  
+  const itemsPerPage = 10;
+  const displayedAgents = isDashboard 
+    ? agents.slice(0, 5) // Show only top 5 on dashboard
+    : agents.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  
+  const totalPages = Math.ceil(agents.length / itemsPerPage);
 
   const getInitials = (name: string) => {
     return name
@@ -96,13 +117,17 @@ export function AgentsCard() {
     <>
       <Card className="p-6 shadow-sm transition-shadow hover:shadow-md animate-fade-up bg-white">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-semibold">Top Performing Agents</h2>
-          <a href="/agents" className="text-sm text-primary hover:underline">
-            View all
-          </a>
+          <h2 className="text-lg font-semibold">
+            {isDashboard ? "Top Performing Agents" : "All Agents"}
+          </h2>
+          {isDashboard && (
+            <a href="/agents" className="text-sm text-primary hover:underline">
+              View all
+            </a>
+          )}
         </div>
         <div className="space-y-6">
-          {agents.map((agent) => (
+          {displayedAgents.map((agent) => (
             <div 
               key={agent.id} 
               className="flex items-center gap-4 p-3 rounded-lg transition-colors hover:bg-secondary/50 cursor-pointer"
@@ -137,6 +162,58 @@ export function AgentsCard() {
             </div>
           ))}
         </div>
+        
+        {!isDashboard && totalPages > 1 && (
+          <div className="mt-6">
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious 
+                    onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                    className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                  />
+                </PaginationItem>
+                
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+                  if (
+                    page === 1 ||
+                    page === totalPages ||
+                    (page >= currentPage - 1 && page <= currentPage + 1)
+                  ) {
+                    return (
+                      <PaginationItem key={page}>
+                        <PaginationLink
+                          onClick={() => setCurrentPage(page)}
+                          isActive={currentPage === page}
+                          className="cursor-pointer"
+                        >
+                          {page}
+                        </PaginationLink>
+                      </PaginationItem>
+                    );
+                  } else if (
+                    page === currentPage - 2 ||
+                    page === currentPage + 2
+                  ) {
+                    return (
+                      <PaginationItem key={page}>
+                        <PaginationEllipsis />
+                      </PaginationItem>
+                    );
+                  }
+                  return null;
+                })}
+                
+                <PaginationItem>
+                  <PaginationNext 
+                    onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                    className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        )}
       </Card>
 
       <AgentDetailsDialog 
